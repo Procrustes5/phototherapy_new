@@ -1,0 +1,108 @@
+@import '@style/global.scss';
+.app-header {
+  box-sizing: border-box;
+  width: 100%;
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 16px;
+  background: $main;
+  .header-title {
+    color: whitesmoke;
+    margin-right: 12px;
+    h1 {
+      -webkit-user-select:none;
+      -moz-user-select:none;
+      -ms-user-select:none;
+      user-select:none;
+      cursor: pointer;
+    }
+  }
+  .header-scroll-menu {
+    width: fit-content;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+  .header-menu-wrapper {
+    box-sizing: border-box;
+    width: fit-content;
+    height: 100%;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    .menu-item {
+      border: none;
+      display: flex;
+      width: 130px;
+      height: 90%;
+      color: whitesmoke;
+      justify-content: center;
+      margin-right: 8px;
+      align-items: center;
+      &:hover {
+        box-sizing: border-box;
+        border: solid 1px #cbcbcb;
+      }
+    }
+  }
+  .dropdown {
+    cursor: pointer;
+  }
+}
+@media screen and (max-width:767px) {
+  .app-header {
+    box-sizing: border-box;
+    width: 100%;
+    height: 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 12px;
+    .header-title {
+      margin-right: 12px;
+      color: whitesmoke;
+      h1 {
+        font-size: 22px;
+      }
+    }
+    .header-scroll-menu {
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+    .header-menu-wrapper {
+      box-sizing: border-box;
+      width: fit-content;
+      height: 100%;
+      display: flex;
+      justify-content: end;
+      align-items: center;
+      .menu-item {
+        border: none;
+        display: flex;
+        width: 80px;
+        height: 90%;
+        justify-content: center;
+        margin-right: 8px;
+        align-items: center;
+        color: whitesmoke;
+        span {
+          font-size: 14px;
+          font-weight: 500;
+        }
+        &:hover {
+          box-sizing: border-box;
+          border: solid 1px #cbcbcb;
+        }
+      }
+      .kj {
+        flex-direction: column;
+      }
+    }
+  }
+  .dropdown {
+    cursor: pointer;
+  }
+}
