@@ -1,56 +1,44 @@
 <script setup lang="ts">
 import { onMounted, ref, onUnmounted } from "vue";
-import image1 from '@/assets/images/IMG_9295.jpeg'
-import image2 from '@/assets/images/IMG_9296.jpeg'
-import image3 from '@/assets/images/IMG_9297.jpeg'
-import image4 from '@/assets/images/IMG_9298.jpeg'
-import image6 from '@/assets/images/IMG_9300.jpeg'
-import image8 from '@/assets/images/IMG_9303.jpeg'
-import image10 from '@/assets/images/IMG_9305.jpeg'
 import { useRouter } from 'vue-router';
 import { useMenuStore } from '@store/menuStore.ts'
 import { storeToRefs } from 'pinia';
 import UiHomePage from "./UiHomePage.vue";
 import AppHeader from '@app/AppHeader.vue'
 import AppFooter from '@app/AppFooter.vue'
+import { supabase } from '@/utils/supabase'
 
 const menuStore = useMenuStore();
 const { clickedIcon, isOpened } = storeToRefs(menuStore);
 const router = useRouter();
-const images = [image8, image2, image3, image4];
-const categoryImg = [image4, image6, image10, image1]
+const photos = ref([]);
+const categories = ref([]);
 const currentIndex = ref(0);
 const isSlideShown = ref(true)
-const closeMenu = () => {
-  isOpened.value = false
+const headerRef = ref();
+          
+const getCategories = async (): Promise<void> => {
+  let { data } = await supabase.from('category').select('*')
+  categories.value = data;
 }
 
-function preventScroll(e) {
-  e.preventDefault();
+const getSlidePhotos = async (): Promise<void> => {
+  let { data, error } = await supabase
+    .from('photo')
+    .select('*')
+    .eq('category_id', 5)
+  photos.value = data;
 }
 
-function disableScroll() {
-  window.addEventListener('wheel', preventScroll, { passive: false });
-  window.addEventListener('touchmove', preventScroll, { passive: false });
-}
 
-function enableScroll() {
-  window.removeEventListener('wheel', preventScroll);
-  window.removeEventListener('touchmove', preventScroll);
-}
-
-const headerRef = ref<HTMLDivElement>();
-const contentRef = ref<HTMLDivElement>();
 onMounted(() => {
+  getSlidePhotos();
+  getCategories();
   const headerObserver = new IntersectionObserver(
     (entries) => {
       const firstEntry = entries[0];
       if (firstEntry.isIntersecting) {
         isSlideShown.value = true
-        disableScroll();
-        setTimeout(enableScroll, 1200); 
-        window.scrollTo({ top: 0 });
-        closeMenu();
       } else {
         isSlideShown.value = false
       }
@@ -61,68 +49,36 @@ onMounted(() => {
     }
   );
   headerObserver.observe(headerRef.value!);
-
-  const contentObserver = new IntersectionObserver(
-    (entries) => {
-      const firstEntry = entries[0];
-      if (firstEntry.isIntersecting) {
-        const bottom = contentRef.value!.getBoundingClientRect().bottom
-        disableScroll();
-        setTimeout(enableScroll, 1200); 
-        if (window.innerWidth < 767) {
-          window.scrollTo({ top: bottom + 290 });
-        } else {
-          window.scrollTo({ top: bottom + 315, behavior: "smooth" });
-        }
-      }
-    },
-    {
-      root: null,
-      threshold: 0,
-    }
-  );
-
-  contentObserver.observe(contentRef.value!);
 });
 
 setInterval(() => {
-  currentIndex.value = (currentIndex.value + 1) % images.length;
+  currentIndex.value = (currentIndex.value + 1) % photos.value.length;
 }, 3000);
-const handleMainClick = () => {
-  const bottom = contentRef.value!.getBoundingClientRect().bottom
-  if (window.innerWidth < 767) {
-    window.scrollTo({ top: bottom + 290 });
-  } else {
-    window.scrollTo({ top: bottom + 315, behavior: "smooth" });
-  }
-}
-const categories = ["Conatus", "The moment", "Gyeongju", "Docu&Snap"]
 </script>
 <template>
   <div class="wrapper">
-    <div class="header" @click="handleMainClick">
-    <div 
-      class="main-image" 
-      v-for="(image, index) in images"
-      :key="index"
-      :class="{ active: index === currentIndex, notHorizontal: image !== image8 }"
-    >
-    <el-image :src="image" class="img"></el-image>
-  </div>
-  <div class="fixed-content" :class="{ active: currentIndex === 0 }">
-    <div class="title">
-      Phototherapy
+    <div class="header" ref="headerRef">
+      <div 
+        class="main-image" 
+        v-for="(image, index) in photos"
+        :key="index"
+        :class="{ active: index === currentIndex, notHorizontal: image !== image8 }"
+      >
+      <el-image :src="image.content" class="img"></el-image>
     </div>
-    <div class="sub-title">
-      Light Up Your Life: Embrace the Power of Phototherapy
+    <div class="fixed-content" :class="{ active: currentIndex === 0 }">
+      <div class="title">
+        Phototherapy
+      </div>
+      <div class="sub-title">
+        Light Up Your Life: Embrace the Power of Phototherapy
+      </div>
     </div>
-    <!-- <div class="prepare">This page is preparing for Official Launch</div> -->
   </div>
-</div>
-<div class="sizedBox" ref="headerRef"></div>
-<div class="sizedBox" ref="contentRef"></div>
+
 <div class="content">
-  <app-header v-if="!isSlideShown" class="main-header"/>
+  <app-header v-show="!isSlideShown" class="main-header"/>
+  <div class="header-spacing"></div>
   <UiHomePage></UiHomePage>
   <app-footer/>
 </div>
@@ -159,8 +115,10 @@ const categories = ["Conatus", "The moment", "Gyeongju", "Docu&Snap"]
   position: absolute;
   transition: opacity 1s ease;
   opacity: 0;
+  border: 30px solid whitesmoke;
+  box-sizing: border-box;
   .img {
-    height: 100%;
+    height: 90%;
   }
 }
 .notHorizontal {
