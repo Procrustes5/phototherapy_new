@@ -62,7 +62,7 @@ setInterval(() => {
         class="main-image" 
         v-for="(image, index) in photos"
         :key="index"
-        :class="{ active: index === currentIndex, notHorizontal: image !== image8 }"
+        :class="{ active: index === currentIndex }"
       >
         <el-image :src="image.content" class="img"></el-image>
       </div>
@@ -75,8 +75,8 @@ setInterval(() => {
         </div>
       </div>
     </div>
+    <app-header v-show="!isSlideShown" class="main-header"/>
     <div class="content">
-      <app-header v-show="!isSlideShown" class="main-header"/>
       <div class="header-spacing"></div>
       <UiHomePage></UiHomePage>
       <app-footer/>
@@ -103,6 +103,7 @@ setInterval(() => {
   display: flex;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
   opacity: 0;
   animation: fadeInUp 1.5s ease-out forwards;
 }
@@ -111,6 +112,7 @@ setInterval(() => {
   background: $main;
 }
 .main-image {
+  height: 100%;
   position: absolute;
   transition: opacity 1s ease;
   opacity: 0;
@@ -118,10 +120,8 @@ setInterval(() => {
   .img {
     height: 90%;
     border: 30px solid whitesmoke;
+    box-sizing: border-box;
   }
-}
-.notHorizontal {
-  height: 100%;
 }
 .main-image.active {
   opacity: 1;
@@ -173,10 +173,11 @@ setInterval(() => {
 }
 }
 .content {
+  padding: 12px 30px;
+  box-sizing: border-box;
   width: 100%;
   height: 100%;
   position: relative;
-  padding-top: 16px;
 }
 @media screen and (max-width:1023px) {
 .header {
@@ -255,10 +256,6 @@ setInterval(() => {
     width: 100%;
   }
 }
-.notHorizontal {
-  width: 100%;
-  height: auto;
-}
 .main-image.active {
   opacity: 1;
 }
@@ -301,9 +298,9 @@ setInterval(() => {
 }
 </style>
 <style lang="scss" scope>
-.category-img {
-  img {
-    object-fit: cover;
+.main-image {
+  .img {
+    height: 100% !important;
   }
 }
 img {

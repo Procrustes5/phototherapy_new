@@ -4,14 +4,14 @@
   margin: 0;
   position: relative;
   scrollbar-width: thin; /* 스크롤바를 얇게 설정 (Firefox) */
-  scrollbar-color: #888 #f1f1f1; /* 스크롤바 색상 설정 (Firefox) */
+  scrollbar-color: #888 transparent;
   overflow-y: overlay; /* 스크롤바를 오버레이로 표시 (Edge, IE 제외 대부분의 브라우저) */
   overflow-x: hidden; /* 가로 스크롤바 숨김 */
 }
 /* 웹킷 브라우저(크롬, 사파리 등)용 커스텀 스크롤바 스타일 */
 *::-webkit-scrollbar {
-  position: absolute;
-  width: 8px;  /* 스크롤바 너비 */
+  width: thin;
+  border-radius: 4px;
 }
 
 *::-webkit-scrollbar-track {
