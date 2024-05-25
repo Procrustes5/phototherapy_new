@@ -13,9 +13,11 @@ const closeMenu = (): void => {
   isOpened.value = false
 }
 const handleClickedGallery = (id: number): void => {
+  window.scrollTo({ top: 0 });
   router.push(`/gallery/${id}`)
 }
 const handleClickedAbout = (category: string): void => {
+  window.scrollTo({ top: 0 });
   router.push(`/${category}`)
 }
 const menuSize = computed((): string => {

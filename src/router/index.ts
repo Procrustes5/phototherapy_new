@@ -21,7 +21,10 @@ export const routes = [
   },
   {
     path: '/gallery/:id(\\d+)',
-    component: GalleryPage
+    component: GalleryPage,
+    scrollBehavior(to, from, savedPosition) {
+      return { top: 0 }
+    },
   },
   {
     path: '/direction',
@@ -42,7 +45,6 @@ export const router = createRouter({
   history: createWebHistory(),
   routes,
   scrollBehavior(to, from, savedPosition) {
-    // always scroll to top
-    return { top: 0 }
+    document.getElementById("app").scrollTop = 0;
   }
 })
