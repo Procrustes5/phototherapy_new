@@ -20,7 +20,7 @@ export const routes = [
     component: HomePage
   },
   {
-    path: '/gallery/:id(\\d+)?',
+    path: '/gallery/:id(\\d+)',
     component: GalleryPage
   },
   {
