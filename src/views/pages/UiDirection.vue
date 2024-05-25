@@ -48,7 +48,6 @@ setInterval(() => {
 .page-container {
   margin-top: 80px;
   width: 100%;
-
   display: flex;
   .page-left {
     width: 100%;
