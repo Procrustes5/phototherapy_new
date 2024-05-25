@@ -64,24 +64,23 @@ setInterval(() => {
         :key="index"
         :class="{ active: index === currentIndex, notHorizontal: image !== image8 }"
       >
-      <el-image :src="image.content" class="img"></el-image>
-    </div>
-    <div class="fixed-content" :class="{ active: currentIndex === 0 }">
-      <div class="title">
-        Phototherapy
+        <el-image :src="image.content" class="img"></el-image>
       </div>
-      <div class="sub-title">
-        Light Up Your Life: Embrace the Power of Phototherapy
+      <div class="fixed-content" :class="{ active: currentIndex === 0 }">
+        <div class="title">
+          Phototherapy
+        </div>
+        <div class="sub-title">
+          Light Up Your Life: Embrace the Power of Phototherapy
+        </div>
       </div>
     </div>
-  </div>
-
-<div class="content">
-  <app-header v-show="!isSlideShown" class="main-header"/>
-  <div class="header-spacing"></div>
-  <UiHomePage></UiHomePage>
-  <app-footer/>
-</div>
+    <div class="content">
+      <app-header v-show="!isSlideShown" class="main-header"/>
+      <div class="header-spacing"></div>
+      <UiHomePage></UiHomePage>
+      <app-footer/>
+    </div>
   </div>
 
 </template>
@@ -94,7 +93,7 @@ setInterval(() => {
 }
 .main-header {
   opacity: 0;
-  animation: fadeInUp 1.5s ease-out forwards;
+  animation: fadeInUp 0.5s ease-out forwards;
 }
 .header {
   width: 100%;
@@ -115,10 +114,10 @@ setInterval(() => {
   position: absolute;
   transition: opacity 1s ease;
   opacity: 0;
-  border: 30px solid whitesmoke;
   box-sizing: border-box;
   .img {
     height: 90%;
+    border: 30px solid whitesmoke;
   }
 }
 .notHorizontal {
@@ -176,38 +175,8 @@ setInterval(() => {
 .content {
   width: 100%;
   height: 100%;
-}
-.category {
-  width: 100%;
-  height: 100vh;
-  display: grid;
-  grid-template-columns: 0.5fr 0.5fr;
-  grid-template-rows: 0.5fr 0.5fr;
-  background: black;
-  overflow: hidden;
-  opacity: 0;
-  animation: fadeInUp 2.0s ease-out forwards;
-  .category-item {
-    height: 50vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .category-item:hover {
-    box-sizing: border-box;
-    border: 1px solid whitesmoke;
-  }
-  .category-img {
-    width: 100%;
-    height: 100%;
-    position: relative;
-  }
-  span {
-    position: fixed;
-    color: whitesmoke;
-    font-size: 40px;
-    font-weight: 600;
-  }
+  position: relative;
+  padding-top: 16px;
 }
 @media screen and (max-width:1023px) {
 .header {
@@ -262,48 +231,7 @@ setInterval(() => {
     color: whitesmoke;
     font-style: italic;
   }
-}
-.category {
-  width: 100%;
-  height: 100vh;
-  display: grid;
-  grid-template-columns: 0.5fr 0.5fr;
-  grid-template-rows: 0.5fr 0.5fr;
-  background: black;
-  overflow: hidden;
-  opacity: 0;
-  animation: fadeInUp 2.0s ease-out forwards;
-  .category-item {
-    height: 50vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .category-item:hover {
-    box-sizing: border-box;
-    border: 1px solid whitesmoke;
-  }
-  .category-img {
-    width: 100%;
-    height: 100%;
-    position: relative;
-  }
-  span {
-    position: fixed;
-    color: whitesmoke;
-    font-size: 40px;
-    font-weight: 600;
-  }
-}
-.prepare {
-    color: whitesmoke;
-    margin-top: 30px;
-    font-size: 12px;
-    border: 1px solid whitesmoke;
-    font-weight: 600;
-    padding: 4px 6px;
-  }
-}
+}}
 @media screen and (max-width:767px) {
 .header {
   width: 100%;
@@ -370,39 +298,7 @@ setInterval(() => {
     margin-top: 16px;
   }
 }
-.category {
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background: black;
-  overflow: hidden;
-  opacity: 0;
-  animation: fadeInUp 2.0s ease-out forwards;
-  .category-item {
-    height: 25vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .category-item:hover {
-    box-sizing: border-box;
-    border: 1px solid whitesmoke;
-  }
-  .category-img {
-    width: 100%;
-    height: 100%;
-    position: relative;
-  }
-  span {
-    position: fixed;
-    color: whitesmoke;
-    font-size: 20px;
-    font-weight: 600;
-  }
 }
-}
-
 </style>
 <style lang="scss" scope>
 .category-img {
