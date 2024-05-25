@@ -135,6 +135,7 @@ const handleLangBtn = (lang) => {
     color: whitesmoke;
   }
   .profile-wrapper {
+    margin-top: 80px;
     display: flex;
     align-items: start;
     width: 100%;

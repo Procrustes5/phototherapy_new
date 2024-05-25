@@ -41,6 +41,7 @@ setInterval(() => {
 </template>
 <style lang="scss" scoped>
 .page-container {
+  margin-top: 80px;
   width: 100%;
 
   display: flex;
