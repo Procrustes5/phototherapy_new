@@ -111,6 +111,9 @@ setInterval(() => {
   height: 300px;
   background: $main;
 }
+.header-spacing {
+  height: 92px;
+}
 .main-image {
   height: 100%;
   position: absolute;

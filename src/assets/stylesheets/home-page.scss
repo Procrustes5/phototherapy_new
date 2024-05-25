@@ -7,7 +7,7 @@
   opacity: 0;
   animation: fadeInUp 1.5s ease-out forwards;
   .top-image {
-    width: 100%;
+    height: calc(100vh - 100px);
   }
   .middle-image {
     width: 100%;
@@ -39,7 +39,7 @@ to {
     opacity: 0;
     animation: fadeInUp 1.5s ease-out forwards;
     .top-image {
-      width: 100%;
+      height: calc(100vh - 100px);
     }
     .middle-image {
       width: 100%;
