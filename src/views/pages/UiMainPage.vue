@@ -9,7 +9,7 @@ import AppFooter from '@app/AppFooter.vue'
 import { supabase } from '@/utils/supabase'
 
 const menuStore = useMenuStore()
-const categories = defineModel('categories');
+const categories = defineModel('categories')
 const { clickedIcon, isOpened } = storeToRefs(menuStore)
 const router = useRouter()
 const photos = ref([])

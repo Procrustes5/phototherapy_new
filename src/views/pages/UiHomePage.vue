@@ -5,7 +5,7 @@ import { supabase } from '@/utils/supabase'
 import Drawer from '@view/ui-elements/UiPhotoDrawer.vue'
 
 const photos = ref([])
-const categories = defineModel('categories');
+const categories = defineModel('categories')
 const homeStore = useHomeStore()
 const { clickedImage, isOpened } = storeToRefs(homeStore)
 const handleDrawer = (img) => {
@@ -17,14 +17,17 @@ const getHomePhotos = async (): Promise<void> => {
   photos.value = data
 }
 
-
 onMounted(() => {
   getHomePhotos()
 })
 </script>
 <template>
   <div class="home-page" ref="contentRef">
-    <el-image class="top-image" :src="photos[0]?.content" @click="handleDrawer(photos[0].content)"></el-image>
+    <el-image
+      class="top-image"
+      :src="photos[0]?.content"
+      @click="handleDrawer(photos[0].content)"
+    ></el-image>
     <div class="middle-image">
       <el-image
         v-for="(photo, index) in photos.slice(1, 9)"
@@ -35,7 +38,11 @@ onMounted(() => {
       ></el-image>
     </div>
     <div class="bottom-image">
-      <el-image class="btm-img" :src="photos[9]?.content" @click="handleDrawer(photos[9].content)"></el-image>
+      <el-image
+        class="btm-img"
+        :src="photos[9]?.content"
+        @click="handleDrawer(photos[9].content)"
+      ></el-image>
     </div>
   </div>
   <Drawer></Drawer>

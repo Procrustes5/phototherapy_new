@@ -24,7 +24,6 @@ import image22 from '@/assets/images/docu/22.jpeg'
 import { useHomeStore } from '@store/homeStore.ts'
 import { storeToRefs } from 'pinia'
 import Drawer from '@view/ui-elements/UiPhotoDrawer.vue'
-import Menu from '@view/ui-elements/UiMenuDrawer.vue'
 
 const homeStore = useHomeStore()
 const { clickedImage, isOpened } = storeToRefs(homeStore)

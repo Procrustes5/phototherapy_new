@@ -4,7 +4,7 @@ import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 import { supabase } from '@/utils/supabase'
 
-const categories = defineModel('categories');
+const categories = defineModel('categories')
 const menuStore = useMenuStore()
 const router = useRouter()
 const { clickedIcon, isOpened } = storeToRefs(menuStore)
@@ -55,7 +55,12 @@ const handleLogin = async (): Promise<void> => {
     <div class="upper-drawer">
       <div class="title">▼ Gallery</div>
       <div class="menu-wrapper">
-        <div class="menu" v-for="(category, index) in categories" :key="index" @click="handleClickedGallery(category.id)">
+        <div
+          class="menu"
+          v-for="(category, index) in categories"
+          :key="index"
+          @click="handleClickedGallery(category.id)"
+        >
           <span>{{ category.name }}</span>
         </div>
       </div>
