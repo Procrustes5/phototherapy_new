@@ -1,16 +1,16 @@
 <script setup>
 import Menu from '@view/ui-elements/UiMenuDrawer.vue'
-const items = ['色', '受', '想', '行', '識'];
-const activeIndex = ref(0);
+const items = ['色', '受', '想', '行', '識']
+const activeIndex = ref(0)
 
 // 3초마다 activeIndex 업데이트
 setInterval(() => {
   if (activeIndex.value < items.length - 1) {
-    activeIndex.value++;
+    activeIndex.value++
   } else {
-    activeIndex.value = 0; // 마지막에 다다르면 다시 처음으로
+    activeIndex.value = 0 // 마지막에 다다르면 다시 처음으로
   }
-}, 3000);
+}, 3000)
 </script>
 <template>
   <div class="page-container">
@@ -27,7 +27,12 @@ setInterval(() => {
     </div>
     <div class="page-right">
       <h1>Main Concept : pañca-skandha(五蘊)</h1>
-      <span class="description">The photographs are based on the Buddhist concept of the Five Aggregates. The Five Aggregates discuss how we perceive and receive objects, which is highly relevant to photography. This concept is also associated with achieving mental peace and healing through photographs.</span>
+      <span class="description"
+        >The photographs are based on the Buddhist concept of the Five Aggregates. The Five
+        Aggregates discuss how we perceive and receive objects, which is highly relevant to
+        photography. This concept is also associated with achieving mental peace and healing through
+        photographs.</span
+      >
       <div class="contents">
         <span class="content">rupa 色蘊</span>
         <span class="content">vedana 受蘊</span>
@@ -100,19 +105,28 @@ setInterval(() => {
   border: 4px solid black;
 }
 
-
-.circle1 { transform: translate(0, -150px); }
-.circle2 { transform: translate(128px, -75px); }
-.circle3 { transform: translate(128px, 75px); }
-.circle4 { transform: translate(0, 150px); }
-.circle5 { transform: translate(-128px, 75px); }
+.circle1 {
+  transform: translate(0, -150px);
+}
+.circle2 {
+  transform: translate(128px, -75px);
+}
+.circle3 {
+  transform: translate(128px, 75px);
+}
+.circle4 {
+  transform: translate(0, 150px);
+}
+.circle5 {
+  transform: translate(-128px, 75px);
+}
 
 .circle.active {
   opacity: 1; /* 활성화 상태에서는 불투명 */
   box-shadow: 0 0 8px 2px #fff; /* 빛나는 효과 */
 }
 
-@media screen and (max-width:767px) {
+@media screen and (max-width: 767px) {
   .page-container {
     flex-direction: column;
     margin: 10px 0px;
@@ -121,31 +135,30 @@ setInterval(() => {
     }
     .page-right {
       box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    padding: 0px 24px;
-    h1 {
-      margin: 18px 0px;
-      color: whitesmoke;
-      font-size: 20px;
-    }
-    .description {
-      width: 100%;
-      font-size: 18px;
-      color: whitesmoke;
-      margin: 20px 0px;
-    }
-    .contents {
       display: flex;
       flex-direction: column;
-      .content {
+      width: 100%;
+      padding: 0px 24px;
+      h1 {
+        margin: 18px 0px;
         color: whitesmoke;
+        font-size: 20px;
+      }
+      .description {
+        width: 100%;
         font-size: 18px;
+        color: whitesmoke;
+        margin: 20px 0px;
+      }
+      .contents {
+        display: flex;
+        flex-direction: column;
+        .content {
+          color: whitesmoke;
+          font-size: 18px;
+        }
       }
     }
   }
-  }
 }
-
 </style>

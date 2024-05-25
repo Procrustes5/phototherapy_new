@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const currentYear = new Date().getFullYear();
+const currentYear = new Date().getFullYear()
 </script>
 <template>
   <footer class="footer">
@@ -20,47 +20,47 @@ const currentYear = new Date().getFullYear();
 </template>
 <style lang="scss" scoped>
 @import '@style/global.scss';
-  span {
-    color: whitesmoke;
+span {
+  color: whitesmoke;
+}
+.footer {
+  box-sizing: border-box;
+  width: 100%;
+  background: $main;
+  padding: 40px;
+  display: flex;
+}
+.footer-left {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  .contact-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
   }
-  .footer {
-    box-sizing: border-box;
-    width: 100%;
-    background: $main;
-    padding: 40px;
-    display: flex;
-  }
-  .footer-left {
-    width: 100%;
+}
+.footer-right {
+  width: 100%;
+  .photographer {
     display: flex;
     flex-direction: column;
-    justify-content: end;
-    .contact-title {
+    align-items: end;
+    .photographer-upper {
       font-size: 18px;
       font-weight: 600;
-      margin-bottom: 12px;
+    }
+    .name {
+      font-style: italic;
     }
   }
-  .footer-right {
-    width: 100%;
-    .photographer {
-      display: flex;
-      flex-direction: column;
-      align-items: end;
-      .photographer-upper {
-        font-size: 18px;
-        font-weight: 600;
-      }
-      .name {
-        font-style: italic;
-      }
-    }
-    .copyright {
-      margin-top: 24px;
-      color: whitesmoke;
-    }
+  .copyright {
+    margin-top: 24px;
+    color: whitesmoke;
   }
-  @media screen and (max-width:767px) {
+}
+@media screen and (max-width: 767px) {
   span {
     color: whitesmoke;
     font-size: 8px;
@@ -72,7 +72,7 @@ const currentYear = new Date().getFullYear();
     padding: 25px;
     display: flex;
   }
-  .footer-left{
+  .footer-left {
     display: flex;
     flex-direction: column;
     justify-content: end;
@@ -106,5 +106,5 @@ const currentYear = new Date().getFullYear();
       text-align: right;
     }
   }
-  }
+}
 </style>

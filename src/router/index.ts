@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router'
 
 import HomePage from '@pages/UiHomePage.vue'
 import MainPage from '@pages/UiMainPage.vue'
@@ -13,42 +13,42 @@ export const routes = [
   {
     path: '/',
     name: 'home',
-    component: MainPage,
+    component: MainPage
   },
   {
     path: '/photo',
-    component: HomePage,
+    component: HomePage
   },
   {
     path: '/docu',
-    component: DocuPage,
+    component: DocuPage
   },
   {
     path: '/gyeongju',
-    component: GyeongjuPage,
+    component: GyeongjuPage
   },
   {
     path: '/moment',
-    component: MomentPage,
+    component: MomentPage
   },
   {
     path: '/conatus',
-    component: ConatusPage,
+    component: ConatusPage
   },
   {
     path: '/direction',
-    component: DirectionPage,
+    component: DirectionPage
   },
   {
     path: '/profile',
-    component: ProfilePage,
+    component: ProfilePage
   },
   {
     path: '/:pathMatch(.*)*',
-    redirect: '/',
+    redirect: '/'
     // 404ページ実装
-  },
-];
+  }
+]
 
 export const router = createRouter({
   history: createWebHistory(),
@@ -56,5 +56,5 @@ export const router = createRouter({
   scrollBehavior(to, from, savedPosition) {
     // always scroll to top
     return { top: 0 }
-  },
-});
+  }
+})

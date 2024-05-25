@@ -1,12 +1,12 @@
 <script lang="ts" setup>
 import { useMenuStore } from '@store/menuStore.ts'
-import { storeToRefs } from 'pinia';
-import { useRouter } from 'vue-router';
+import { storeToRefs } from 'pinia'
+import { useRouter } from 'vue-router'
 import { supabase } from '@/utils/supabase'
 
-const menuStore = useMenuStore();
-const router = useRouter();
-const { clickedIcon, isOpened } = storeToRefs(menuStore);
+const menuStore = useMenuStore()
+const router = useRouter()
+const { clickedIcon, isOpened } = storeToRefs(menuStore)
 
 const closeMenu = (): void => {
   isOpened.value = false
@@ -34,58 +34,54 @@ const handleLogin = async (): Promise<void> => {
   console.log(session)
   const { data: user, error: postUserError } = await supabase
     .from('User')
-    .insert([
-      { name: session, email: 'otherValue' },
-    ])
+    .insert([{ name: session, email: 'otherValue' }])
     .select()
-          
 }
-
 </script>
 <template>
-<el-drawer
-  class="drawer"
-  v-model="isOpened"
-  direction="rtl"
-  :with-header="false"
-  :size="menuSize"
-  @click="closeMenu"
-  style="background: #0c1117;"
->
-  <div class="upper-drawer">
-    <div class="title">▼ Gallery</div>
-    <div class="menu-wrapper">
-      <div class="menu" @click="handleClickedCategory('conatus')">
-        <span>Conatus</span>
+  <el-drawer
+    class="drawer"
+    v-model="isOpened"
+    direction="rtl"
+    :with-header="false"
+    :size="menuSize"
+    @click="closeMenu"
+    style="background: #0c1117"
+  >
+    <div class="upper-drawer">
+      <div class="title">▼ Gallery</div>
+      <div class="menu-wrapper">
+        <div class="menu" @click="handleClickedCategory('conatus')">
+          <span>Conatus</span>
+        </div>
+        <div class="menu" @click="handleClickedCategory('moment')">
+          <span>The Moment</span>
+        </div>
+        <div class="menu" @click="handleClickedCategory('gyeongju')">
+          <span>Gyeongju</span>
+        </div>
+        <div class="menu" @click="handleClickedCategory('docu')">
+          <span>Docu&Snap</span>
+        </div>
       </div>
-      <div class="menu" @click="handleClickedCategory('moment')">
-        <span>The Moment</span>
-      </div>
-      <div class="menu" @click="handleClickedCategory('gyeongju')">
-        <span>Gyeongju</span>
-      </div>
-      <div class="menu" @click="handleClickedCategory('docu')">
-        <span>Docu&Snap</span>
+      <div class="title">▼ About</div>
+      <div class="menu-wrapper">
+        <div class="menu" @click="handleClickedCategory('direction')">
+          <span>Direction</span>
+        </div>
+        <div class="menu" @click="handleClickedCategory('profile')">
+          <span>Profile</span>
+        </div>
       </div>
     </div>
-    <div class="title">▼ About</div>
-    <div class="menu-wrapper">
-      <div class="menu" @click="handleClickedCategory('direction')">
-        <span>Direction</span>
-      </div>
-      <div class="menu" @click="handleClickedCategory('profile')">
-        <span>Profile</span>
-      </div>
+    <div class="lower-wrapper">
+      <div @click="handleLogin" v-if="false">login</div>
     </div>
-  </div>
-  <div class="lower-wrapper">
-    <div @click="handleLogin" v-if="false">login</div>
-  </div>
-</el-drawer>
+  </el-drawer>
 </template>
 
 <style lang="scss" scoped>
-@import '@style/menu-drawer.scss'
+@import '@style/menu-drawer.scss';
 </style>
 <style lang="scss" scope>
 .menu-img {

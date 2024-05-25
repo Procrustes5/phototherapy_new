@@ -11,16 +11,25 @@ import image9 from '@/assets/images/IMG_9304.jpeg'
 import image10 from '@/assets/images/IMG_9305.jpeg'
 
 import { useHomeStore } from '@store/homeStore.ts'
-import { storeToRefs } from 'pinia';
+import { storeToRefs } from 'pinia'
+import { supabase } from '@/utils/supabase'
 import Drawer from '@view/ui-elements/UiPhotoDrawer.vue'
 import Menu from '@view/ui-elements/UiMenuDrawer.vue'
 
-const homeStore = useHomeStore();
-const { clickedImage, isOpened } = storeToRefs(homeStore);
+const homeStore = useHomeStore()
+const { clickedImage, isOpened } = storeToRefs(homeStore)
 const handleDrawer = (img) => {
   clickedImage.value = img
   isOpened.value = true
 }
+const getHomePhotos = async (): Promise<void> => {
+  let { data, error } = await supabase.from('photo').select('*').eq('category_id', 5)
+  photos.value = data
+}
+
+onMounted(() => {
+  getHomePhotos()
+})
 </script>
 <template>
   <div class="home-page" ref="contentRef">
@@ -44,7 +53,7 @@ const handleDrawer = (img) => {
 </template>
 <style lang="scss" scoped>
 @import '@style/global.scss';
-@import '@style/home-page.scss'
+@import '@style/home-page.scss';
 </style>
 <style lang="scss" scope>
 .ml-img {
@@ -56,9 +65,9 @@ const handleDrawer = (img) => {
   width: 100%;
 }
 .ml-img1 {
-    grid-row: 1 / 2;
-    grid-column: 1 / 3;
-  }
+  grid-row: 1 / 2;
+  grid-column: 1 / 3;
+}
 .ml-img2 {
   grid-row: 2 / 3;
   grid-column: 1 / 2;
