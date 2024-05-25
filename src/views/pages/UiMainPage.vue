@@ -54,7 +54,8 @@ setInterval(() => {
         :key="index"
         :class="{ active: index === currentIndex }"
       >
-        <el-image :src="image.content" :lazy="index !== 0" class="img"></el-image>
+        <div class="sized-box" v-if="!photos"></div>
+        <el-image :src="image.content" :lazy="index !== 0" class="img" v-else></el-image>      
       </div>
       <div class="fixed-content" :class="{ active: currentIndex === 0 }">
         <div class="title">Phototherapy</div>
@@ -92,10 +93,6 @@ setInterval(() => {
   opacity: 0;
   animation: fadeInUp 1.5s ease-out forwards;
 }
-.sizedBox {
-  height: 300px;
-  background: $main;
-}
 .header-spacing {
   height: 92px;
 }
@@ -110,6 +107,10 @@ setInterval(() => {
     border: 30px solid whitesmoke;
     box-sizing: border-box;
   }
+}
+.sized-box {
+  height: 100%;
+  width: 100%;
 }
 .main-image.active {
   opacity: 1;
