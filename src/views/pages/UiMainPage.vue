@@ -12,15 +12,9 @@ const menuStore = useMenuStore()
 const { clickedIcon, isOpened } = storeToRefs(menuStore)
 const router = useRouter()
 const photos = ref([])
-const categories = ref([])
 const currentIndex = ref(0)
 const isSlideShown = ref(true)
 const headerRef = ref()
-
-const getCategories = async (): Promise<void> => {
-  let { data } = await supabase.from('category').select('*')
-  categories.value = data
-}
 
 const getSlidePhotos = async (): Promise<void> => {
   let { data, error } = await supabase.from('photo').select('*').eq('category_id', 5)
@@ -29,7 +23,6 @@ const getSlidePhotos = async (): Promise<void> => {
 
 onMounted(() => {
   getSlidePhotos()
-  getCategories()
   const headerObserver = new IntersectionObserver(
     (entries) => {
       const firstEntry = entries[0]
