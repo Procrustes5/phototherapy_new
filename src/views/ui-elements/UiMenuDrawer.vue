@@ -12,7 +12,10 @@ const { clickedIcon, isOpened } = storeToRefs(menuStore)
 const closeMenu = (): void => {
   isOpened.value = false
 }
-const handleClickedCategory = (category): void => {
+const handleClickedGallery = (id: number): void => {
+  router.push(`/gallery/${id}`)
+}
+const handleClickedAbout = (category: string): void => {
   router.push(`/${category}`)
 }
 const menuSize = computed((): string => {
@@ -52,16 +55,16 @@ const handleLogin = async (): Promise<void> => {
     <div class="upper-drawer">
       <div class="title">▼ Gallery</div>
       <div class="menu-wrapper">
-        <div class="menu" v-for="(category, index) in categories" :key="index" @click="handleClickedCategory(category.id)">
+        <div class="menu" v-for="(category, index) in categories" :key="index" @click="handleClickedGallery(category.id)">
           <span>{{ category.name }}</span>
         </div>
       </div>
       <div class="title">▼ About</div>
       <div class="menu-wrapper">
-        <div class="menu" @click="handleClickedCategory('direction')">
+        <div class="menu" @click="handleClickedAbout('direction')">
           <span>Direction</span>
         </div>
-        <div class="menu" @click="handleClickedCategory('profile')">
+        <div class="menu" @click="handleClickedAbout('profile')">
           <span>Profile</span>
         </div>
       </div>

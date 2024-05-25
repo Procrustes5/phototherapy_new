@@ -9,6 +9,7 @@ import AppFooter from '@app/AppFooter.vue'
 import { supabase } from '@/utils/supabase'
 
 const menuStore = useMenuStore()
+const categories = defineModel('categories');
 const { clickedIcon, isOpened } = storeToRefs(menuStore)
 const router = useRouter()
 const photos = ref([])
@@ -63,7 +64,7 @@ setInterval(() => {
     <app-header v-show="!isSlideShown" class="main-header" />
     <div class="content">
       <div class="header-spacing"></div>
-      <UiHomePage></UiHomePage>
+      <UiHomePage v-model:categories="categories" />
       <app-footer />
     </div>
   </div>

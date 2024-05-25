@@ -3,10 +3,9 @@ import { useHomeStore } from '@store/homeStore.ts'
 import { storeToRefs } from 'pinia'
 import { supabase } from '@/utils/supabase'
 import Drawer from '@view/ui-elements/UiPhotoDrawer.vue'
-import Menu from '@view/ui-elements/UiMenuDrawer.vue'
 
 const photos = ref([])
-const categories = ref([])
+const categories = defineModel('categories');
 const homeStore = useHomeStore()
 const { clickedImage, isOpened } = storeToRefs(homeStore)
 const handleDrawer = (img) => {
@@ -14,17 +13,13 @@ const handleDrawer = (img) => {
   isOpened.value = true
 }
 const getHomePhotos = async (): Promise<void> => {
-  let { data, error } = await supabase.from('photo').select('*').eq('category_id', 6)
+  let { data } = await supabase.from('photo').select('*').eq('category_id', 6)
   photos.value = data
 }
-const getCategories = async (): Promise<void> => {
-  let { data } = await supabase.from('category').select('*').neq('id', 5).neq('id', 6)
-  categories.value = data
-}
+
 
 onMounted(() => {
   getHomePhotos()
-  getCategories()
 })
 </script>
 <template>
@@ -44,7 +39,6 @@ onMounted(() => {
     </div>
   </div>
   <Drawer></Drawer>
-  <Menu v-model:categories="categories" />
 </template>
 <style lang="scss" scoped>
 @import '@style/global.scss';

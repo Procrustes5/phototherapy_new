@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import profileImage from '@/assets/images/profile.jpg'
-import Menu from '@view/ui-elements/UiMenuDrawer.vue'
 
 const langList = ['en', 'kr', 'jp']
 const selectedLang = ref<string>(langList[0])
@@ -147,7 +146,6 @@ const handleLangBtn = (lang) => {
       </div>
     </div>
   </div>
-  <Menu></Menu>
 </template>
 <style lang="scss" scoped>
 h1,

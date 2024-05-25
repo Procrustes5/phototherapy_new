@@ -1,5 +1,4 @@
 <script setup>
-import Menu from '@view/ui-elements/UiMenuDrawer.vue'
 const items = ['色', '受', '想', '行', '識']
 const activeIndex = ref(0)
 
@@ -42,7 +41,6 @@ setInterval(() => {
       </div>
     </div>
   </div>
-  <Menu></Menu>
 </template>
 <style lang="scss" scoped>
 .page-container {

@@ -81,7 +81,6 @@ const images = [
     </div>
   </div>
   <Drawer></Drawer>
-  <Menu></Menu>
 </template>
 <style lang="scss" scoped>
 @import '@style/global.scss';

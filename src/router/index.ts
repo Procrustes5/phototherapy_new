@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import HomePage from '@pages/UiHomePage.vue'
 import MainPage from '@pages/UiMainPage.vue'
-import DocuPage from '@pages/UiDocu.vue'
+import GalleryPage from '@pages/UiGallery.vue'
 import GyeongjuPage from '@pages/UiGyeongju.vue'
 import MomentPage from '@pages/UiMoment.vue'
 import ConatusPage from '@pages/UiConatus.vue'
@@ -20,20 +20,8 @@ export const routes = [
     component: HomePage
   },
   {
-    path: '/docu',
-    component: DocuPage
-  },
-  {
-    path: '/gyeongju',
-    component: GyeongjuPage
-  },
-  {
-    path: '/moment',
-    component: MomentPage
-  },
-  {
-    path: '/conatus',
-    component: ConatusPage
+    path: '/gallery/:id(\\d+)?',
+    component: GalleryPage
   },
   {
     path: '/direction',
