@@ -55,7 +55,7 @@ setInterval(() => {
         :class="{ active: index === currentIndex }"
       >
         <div class="sized-box" v-if="!photos"></div>
-        <el-image :src="image.content" :lazy="index !== 0" class="img" v-else></el-image>      
+        <el-image :src="image.content" :lazy="index !== 0" class="img" v-else></el-image>
       </div>
       <div class="fixed-content" :class="{ active: currentIndex === 0 }">
         <div class="title">Phototherapy</div>
@@ -103,6 +103,7 @@ setInterval(() => {
   opacity: 0;
   box-sizing: border-box;
   .img {
+    width: 100%;
     height: 90%;
     border: 30px solid whitesmoke;
     box-sizing: border-box;

@@ -3,9 +3,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomePage from '@pages/UiHomePage.vue'
 import MainPage from '@pages/UiMainPage.vue'
 import GalleryPage from '@pages/UiGallery.vue'
-import GyeongjuPage from '@pages/UiGyeongju.vue'
-import MomentPage from '@pages/UiMoment.vue'
-import ConatusPage from '@pages/UiConatus.vue'
 import DirectionPage from '@pages/UiDirection.vue'
 import ProfilePage from '@pages/UiProfile.vue'
 
@@ -24,7 +21,7 @@ export const routes = [
     component: GalleryPage,
     scrollBehavior(to, from, savedPosition) {
       return { top: 0 }
-    },
+    }
   },
   {
     path: '/direction',
@@ -45,6 +42,6 @@ export const router = createRouter({
   history: createWebHistory(),
   routes,
   scrollBehavior(to, from, savedPosition) {
-    document.getElementById("app").scrollTop = 0;
+    document.getElementById('app').scrollTop = 0
   }
 })
