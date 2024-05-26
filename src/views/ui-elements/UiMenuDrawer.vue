@@ -8,6 +8,7 @@ const categories = defineModel('categories')
 const menuStore = useMenuStore()
 const router = useRouter()
 const { clickedIcon, isOpened } = storeToRefs(menuStore)
+const user = ref()
 
 const closeMenu = (): void => {
   isOpened.value = false
@@ -32,17 +33,24 @@ const menuSize = computed((): string => {
   }
 })
 
-const handleLogin = async (): Promise<void> => {
-  const { data: oAuth } = await supabase.auth.signInWithOAuth({
-    provider: 'google'
-  })
-  const { data: session } = await supabase.auth.getSession()
-  console.log(session)
-  const { data: user, error: postUserError } = await supabase
-    .from('User')
-    .insert([{ name: session, email: 'otherValue' }])
-    .select()
+const getCurrentUser = async () => {
+  const { data, error } = await supabase.auth.getUser()
+  if (data) {
+    user.value = data.user
+  } else {
+    console.error(error)
+  }
 }
+
+const handleLogin = async (): Promise<void> => {
+  router.push('/login')
+}
+onMounted(() => {
+  getCurrentUser()
+  supabase.auth.onAuthStateChange((_event, session) => {
+    user.value = session?.user || null
+  })
+})
 </script>
 <template>
   <el-drawer
@@ -76,9 +84,9 @@ const handleLogin = async (): Promise<void> => {
         </div>
       </div>
     </div>
-    <div class="lower-wrapper">
+    <div class="lower-wrapper" v-if="!user">
       <el-icon :size="20"><User /></el-icon>
-      <span @click="handleLogin">Login</span>
+      <span @click="handleLogin">Admin Login</span>
     </div>
   </el-drawer>
 </template>
@@ -101,7 +109,7 @@ const handleLogin = async (): Promise<void> => {
     justify-content: space-between;
     span {
       padding: 8px;
-      font-size: 20px;
+      font-size: 16px;
       color: whitesmoke;
       cursor: pointer;
     }

@@ -103,7 +103,7 @@ setInterval(() => {
   opacity: 0;
   box-sizing: border-box;
   .img {
-    width: 100%;
+    min-width: 100%;
     height: 90%;
     border: 30px solid whitesmoke;
     box-sizing: border-box;

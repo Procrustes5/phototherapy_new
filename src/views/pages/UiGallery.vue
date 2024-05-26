@@ -8,7 +8,7 @@ import { supabase } from '@/utils/supabase'
 const route = useRoute()
 const photos = ref([])
 const getGalleryPhotos = async (): Promise<void> => {
-  let { data } = await supabase.from('photo').select('*').eq('category_id', route.params.id)
+  let { data } = await supabase.from('photo').select('*').eq('category_id', route?.params?.id)
   photos.value = data
 }
 const homeStore = useHomeStore()
@@ -21,7 +21,7 @@ window.scrollTo({ top: 0, behavior: 'smooth' })
 onMounted(() => {
   getGalleryPhotos()
 })
-onUpdated(() => {
+watch(route, () => {
   getGalleryPhotos()
 })
 </script>
@@ -29,7 +29,7 @@ onUpdated(() => {
   <div class="main-wrapper">
     <div class="main-image-wrapper">
       <div class="main-image">
-        <el-image :src="photos[0]?.content" class="img"></el-image>
+        <el-image :src="photos[0]?.content" alt="loading" class="img"></el-image>
       </div>
       <div class="conatus" v-if="route.params.id === '1'">
         <span>Conatus</span>
