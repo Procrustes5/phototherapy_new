@@ -76,9 +76,9 @@ const handleLogin = async (): Promise<void> => {
         </div>
       </div>
     </div>
-    <!-- <div class="lower-wrapper">
-      <div @click="handleLogin" v-if="false">login</div>
-    </div> -->
+    <div class="lower-wrapper">
+      <span @click="handleLogin">Admin Login</span>
+    </div>
   </el-drawer>
 </template>
 
@@ -91,6 +91,18 @@ const handleLogin = async (): Promise<void> => {
   .el-image__inner {
     width: 100%;
     height: 40px;
+  }
+}
+.drawer {
+  .el-drawer__body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    span {
+      padding: 8px;
+      color: whitesmoke;
+      cursor: pointer;
+    }
   }
 }
 </style>
