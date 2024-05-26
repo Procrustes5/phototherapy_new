@@ -4,11 +4,10 @@
   .upper-drawer {
     height: 100%;
   }
-  .lower-drawer {
-    height: 100%;
+  .lower-wrapper {
+    height: 40px;
     display: flex;
-    flex-direction: column;
-    justify-content: end;
+    align-items: center;
   }
   .title {
     color: whitesmoke;

@@ -77,7 +77,8 @@ const handleLogin = async (): Promise<void> => {
       </div>
     </div>
     <div class="lower-wrapper">
-      <span @click="handleLogin">Admin Login</span>
+      <el-icon :size="20"><User /></el-icon>
+      <span @click="handleLogin">Login</span>
     </div>
   </el-drawer>
 </template>
@@ -100,6 +101,7 @@ const handleLogin = async (): Promise<void> => {
     justify-content: space-between;
     span {
       padding: 8px;
+      font-size: 20px;
       color: whitesmoke;
       cursor: pointer;
     }
