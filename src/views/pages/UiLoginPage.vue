@@ -21,14 +21,21 @@ const validateEmail = () => {
 
 const validatePassword = () => {
   const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
-  passwordError.value = regex.test(password.value) ? '' : 'Password must be at least 8 characters long and include an uppercase letter, a lowercase letter, a number, and a special character'
+  passwordError.value = regex.test(password.value)
+    ? ''
+    : 'Password must be at least 8 characters long and include an uppercase letter, a lowercase letter, a number, and a special character'
 }
 
-const isFormValid = computed(() => !emailError.value && !passwordError.value && email.value && password.value)
+const isFormValid = computed(
+  () => !emailError.value && !passwordError.value && email.value && password.value
+)
 
 const login = async () => {
   try {
-    const { error } = await supabase.auth.signInWithPassword({ email: email.value, password: password.value })
+    const { error } = await supabase.auth.signInWithPassword({
+      email: email.value,
+      password: password.value
+    })
     console.log(error)
     if (error) throw error
     alert('Login successful')
@@ -38,9 +45,8 @@ const login = async () => {
   }
 }
 
-
 onMounted(() => {
-  getLoginPhoto();
+  getLoginPhoto()
 })
 </script>
 <template>
@@ -57,13 +63,16 @@ onMounted(() => {
         </div>
         <div class="form-item">
           <span>Password</span>
-          <el-input @input="validatePassword" placeholder="password" type="password" v-model="password" />
+          <el-input
+            @input="validatePassword"
+            placeholder="password"
+            type="password"
+            v-model="password"
+          />
         </div>
       </div>
       <div class="btn-wrapper">
-        <button class="btn" @click="login">
-          Go
-        </button>
+        <button class="btn" @click="login">Go</button>
       </div>
     </div>
   </div>
@@ -92,7 +101,7 @@ onMounted(() => {
       .title {
         color: whitesmoke;
         font-size: 30px;
-        font-weight: 600;      
+        font-weight: 600;
       }
       margin-bottom: 24px;
     }
