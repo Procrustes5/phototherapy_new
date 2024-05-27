@@ -18,7 +18,7 @@ const handleDrawer = (img: string) => {
 <template>
   <div class="main-wrapper">
     <div class="main-image-wrapper">
-      <div class="main-image">
+      <div class="main-image" v-show="categoryId !== 5">
         <el-image :src="photos[0]?.content" alt="loading" class="img"></el-image>
       </div>
       <div class="conatus" v-if="categoryId === 1">

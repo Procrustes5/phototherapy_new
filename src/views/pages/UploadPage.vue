@@ -65,6 +65,11 @@ const getPhotoByCategory = async (categoryId: number): Promise<void> => {
     .eq('category_id', categoryId)
   photos.value = photo
 }
+
+watch(categoryIdForPhoto, (id: number) => {
+  getPhotoByCategory(id)
+})
+
 onMounted(() => {
   getCategories()
   getPhotoByCategory(1)
@@ -86,7 +91,7 @@ onMounted(() => {
       <div v-if="uploadError">{{ uploadError }}</div>
     </div>
     <div class="edit-category-wrapper">
-      <span>카테고리 편집</span>
+      <span class="edit-title">카테고리 편집</span>
       <div class="edit-category-list">
         <div class="category-item" v-for="category in categories" :key="category.id">
           <div class="title-wrapper">
@@ -95,14 +100,25 @@ onMounted(() => {
           </div>
           <div class="btn-wrapper">
             <div class="btn">편집</div>
-            <div class="btn">삭제</div>
+            <div class="btn delete">삭제</div>
           </div>
         </div>
       </div>
+      <div class="add-category-btn">
+        <div class="btn">+ 카테고리 추가</div>
+      </div>
     </div>
-    <div>
-      <span>미리보기 & 제목・설명 편집</span>
+    <div class="edit-photo-container">
+      <span>사진 미리보기 & 제목・설명 편집</span>
       <span>사진을 클릭해서 상세정보를 수정할 수 있습니다.</span>
+      <el-select v-model="categoryIdForPhoto" placeholder="카테고리 선택">
+        <el-option
+          v-for="category in categories"
+          :key="category.id"
+          :label="category.name"
+          :value="category.id"
+        />
+      </el-select>
       <EditPhotoPage v-model:photos="photos" v-model:categoryId="categoryIdForPhoto" />
     </div>
   </div>
@@ -123,6 +139,10 @@ onMounted(() => {
     justify-content: center;
   }
   .edit-category-wrapper {
+    .edit-title {
+      font-weight: 600;
+      margin: 12px 0px;
+    }
     .edit-category-list {
       width: 500px;
       display: flex;
@@ -133,8 +153,40 @@ onMounted(() => {
         border-radius: 4px;
         padding: 4px 8px;
         display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .title-wrapper {
+          display: flex;
+        }
+        .btn-wrapper {
+          display: flex;
+          gap: 4px;
+          .btn {
+            border: 1px solid whitesmoke;
+            border-radius: 4px;
+            padding: 4px 8px;
+            color: whitesmoke;
+            cursor: pointer;
+          }
+          .delete {
+            background: rgb(239, 89, 89);
+          }
+        }
       }
     }
+    .add-category-btn {
+      display: flex;
+      justify-content: end;
+      margin-top: 8px;
+      .btn {
+        cursor: pointer;
+      }
+    }
+  }
+  .edit-photo-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
   }
 }
 </style>
