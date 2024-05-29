@@ -2,16 +2,17 @@
 import { supabase } from '@/utils/supabase'
 import { useHomeStore } from '@store/homeStore.ts'
 import { storeToRefs } from 'pinia'
-import Drawer from '@view/ui-elements/UiPhotoDrawer.vue'
+import Drawer from '@view/ui-elements/EditPhotoDrawer.vue'
 
 const photos = defineModel('photos')
 const categoryId = defineModel('categoryId')
 const category = ref()
 
 const homeStore = useHomeStore()
-const { clickedImage, isOpened } = storeToRefs(homeStore)
-const handleDrawer = (img: string) => {
-  clickedImage.value = img
+const { clickedImage, clickedPhoto, isOpened } = storeToRefs(homeStore)
+const handleDrawer = (photo) => {
+  clickedImage.value = photo.content
+  clickedPhoto.value = photo
   isOpened.value = true
 }
 const getCategory = async (): Promise<void> => {
@@ -56,13 +57,13 @@ onMounted(() => {
           <el-image
             :src="photo.content"
             class="img"
-            @click="handleDrawer(photo.content)"
+            @click="handleDrawer(photo)"
           ></el-image>
         </div>
       </div>
     </div>
   </div>
-  <Drawer></Drawer>
+  <Drawer />
 </template>
 <style lang="scss" scoped>
 @import '@style/global.scss';
@@ -71,7 +72,7 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 80px;
+  margin-top: 40px;
   .main-image-wrapper {
     width: 100%;
     height: 100%;

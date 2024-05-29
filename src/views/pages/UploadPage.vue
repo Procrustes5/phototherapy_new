@@ -9,8 +9,9 @@ const uploading = ref(false)
 const uploadError = ref('')
 const categories = ref([])
 const selectedCategory = ref()
-const categoryIdForPhoto = ref(1)
-const photos = ref([])
+const categoryIdForPhoto = ref<number>(1)
+const photos = ref([]);
+const isEditing = ref(false);
 const visibleAddDialog = ref<boolean>(false)
 const visibleDeleteDialog = ref<boolean>(false)
 
@@ -78,6 +79,15 @@ const handleOpenDeleteDialog = () => {
   visibleDeleteDialog.value = true
 }
 
+const handleEditCategory = async(id: number, name: string): Promise<void> => {
+  const { data, error } = await supabase
+    .from('category')
+    .update({ name })
+    .eq('id', id)
+    .select()
+  isEditing.value = false;
+}
+
 watch(categoryIdForPhoto, (id: number) => {
   getPhotoByCategory(id)
 })
@@ -89,52 +99,67 @@ onMounted(() => {
 </script>
 <template>
   <div class="upload-container">
-    <div class="upload-image">
-      <el-select v-model="selectedCategory" placeholder="카테고리 선택">
-        <el-option
-          v-for="category in categories"
-          :key="category.id"
-          :label="category.name"
-          :value="category.id"
-        />
-      </el-select>
-      <input type="file" @change="uploadPhoto($event)" accept="image/*" />
-      <div v-if="uploading">Uploading...</div>
-      <div v-if="uploadError">{{ uploadError }}</div>
-    </div>
-    <div class="edit-category-wrapper">
-      <span class="edit-title">카테고리 편집</span>
-      <div class="edit-category-list">
-        <div class="category-item" v-for="category in categories" :key="category.id">
-          <div class="title-wrapper">
-            <span>카테고리명 : </span>
-            <span>{{ category.name }}</span>
-          </div>
-          <div class="btn-wrapper">
-            <div class="btn">편집</div>
-            <div class="btn delete" @click="handleOpenDeleteDialog">삭제</div>
-          </div>
-          <DeleteCategoryDialog
-            v-model:visible="visibleDeleteDialog"
-            v-model:categoryId="category.id"
+    <div class="upper-part">
+      <div class="upload-image">
+        <span class="title">사진 업로드</span>
+        <el-select class="category-select" v-model="selectedCategory" placeholder="카테고리 선택">
+          <el-option
+            v-for="category in categories"
+            :key="category.id"
+            :label="category.name"
+            :value="category.id"
           />
-        </div>
+        </el-select>
+        <input type="file" @change="uploadPhoto($event)" accept="image/*" />
+        <div v-if="uploading">Uploading...</div>
+        <div v-if="uploadError">{{ uploadError }}</div>
       </div>
-      <div class="add-category-btn">
-        <div class="btn" @click="handleOpenAddDialog">+ 카테고리 추가</div>
+      <div class="edit-category-wrapper">
+        <span class="edit-title title">카테고리 편집</span>
+        <div class="edit-category-list">
+          <div class="category-item" v-for="category in categories" :key="category.id">
+            <div class="title-wrapper">
+              <span class="title-label">카테고리명 : </span>
+              <span v-if="!isEditing">{{ category.name }}</span>
+              <el-input
+                v-else
+                v-model="category.name"
+                placeholder="카테고리를 편집"
+                clearable
+                class="edit-input"
+              >
+              </el-input>
+            </div>
+            <div class="btn-wrapper">
+              <div class="btn" v-if="!isEditing" @click="() => isEditing = true">편집</div>
+              <div class="btn delete" v-if="!isEditing" @click="handleOpenDeleteDialog">삭제</div>
+              <div class="btn delete" v-if="isEditing" @click="() => isEditing = false">취소</div>
+              <div class="btn" v-if="isEditing" @click="handleEditCategory(category.id, category.name)">확인</div>
+            </div>
+            <DeleteCategoryDialog
+              v-model:visible="visibleDeleteDialog"
+              v-model:categoryId="category.id"
+            />
+          </div>
+        </div>
+        <div class="add-category-btn">
+          <div class="btn" @click="handleOpenAddDialog">+ 카테고리 추가</div>
+        </div>
       </div>
     </div>
     <div class="edit-photo-container">
-      <span>사진 미리보기 & 제목・설명 편집</span>
-      <span>사진을 클릭해서 상세정보를 수정할 수 있습니다.</span>
-      <el-select v-model="categoryIdForPhoto" placeholder="카테고리 선택">
-        <el-option
-          v-for="category in categories"
-          :key="category.id"
-          :label="category.name"
-          :value="category.id"
-        />
-      </el-select>
+      <div class="edit-photo-header">
+        <span class="title">사진 미리보기 & 제목・설명 편집</span>
+        <span class="description">사진을 클릭해서 상세정보를 수정할 수 있습니다.</span>
+        <el-select v-model="categoryIdForPhoto" placeholder="카테고리 선택">
+          <el-option
+            v-for="category in categories"
+            :key="category.id"
+            :label="category.name"
+            :value="category.id"
+          />
+        </el-select>
+      </div>
       <EditPhotoPage v-model:photos="photos" v-model:categoryId="categoryIdForPhoto" />
     </div>
     <AddCategoryDialog v-model:visible="visibleAddDialog" />
@@ -147,13 +172,30 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   align-items: center;
+  .title {
+    font-size: 18px;
+    font-weight: 600;
+  }
+  .description {
+    margin-left: 8px;
+
+  }
   span {
     color: whitesmoke;
+  }
+  .upper-part {
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    .category-select {
+      margin-bottom: 8px;
+    }
   }
   .upload-image {
     width: 500px;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    padding: 0px 16px;
   }
   .edit-category-wrapper {
     .edit-title {
@@ -173,7 +215,18 @@ onMounted(() => {
         justify-content: space-between;
         align-items: center;
         .title-wrapper {
+          width: 300px !important;
           display: flex;
+          width: fit-content;
+          align-items: center;
+          gap: 4px;
+          .title-label {
+            min-width: 80px;
+          }
+          .edit-input {
+            width: 100%;
+            height: 100%;
+          }
         }
         .btn-wrapper {
           display: flex;
@@ -204,6 +257,10 @@ onMounted(() => {
     display: flex;
     flex-direction: column;
     width: 100%;
+    align-items: center;
+    .edit-photo-header {
+      width: 80%;
+    }
   }
 }
 </style>
