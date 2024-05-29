@@ -2,6 +2,8 @@
 import { supabase } from '@/utils/supabase'
 import imageCompression from 'browser-image-compression'
 import EditPhotoPage from './EditPhotoPage.vue'
+import AddCategoryDialog from '../ui-elements/AddCategoryDialog.vue'
+import DeleteCategoryDialog from '../ui-elements/DeleteCategoryDialog.vue'
 
 const uploading = ref(false)
 const uploadError = ref('')
@@ -9,6 +11,8 @@ const categories = ref([])
 const selectedCategory = ref()
 const categoryIdForPhoto = ref(1)
 const photos = ref([])
+const visibleAddDialog = ref<boolean>(false)
+const visibleDeleteDialog = ref<boolean>(false)
 
 const uploadPhoto = async (event) => {
   const file = event.target.files[0]
@@ -66,6 +70,14 @@ const getPhotoByCategory = async (categoryId: number): Promise<void> => {
   photos.value = photo
 }
 
+const handleOpenAddDialog = () => {
+  visibleAddDialog.value = true
+}
+
+const handleOpenDeleteDialog = () => {
+  visibleDeleteDialog.value = true
+}
+
 watch(categoryIdForPhoto, (id: number) => {
   getPhotoByCategory(id)
 })
@@ -100,12 +112,16 @@ onMounted(() => {
           </div>
           <div class="btn-wrapper">
             <div class="btn">편집</div>
-            <div class="btn delete">삭제</div>
+            <div class="btn delete" @click="handleOpenDeleteDialog">삭제</div>
           </div>
+          <DeleteCategoryDialog
+            v-model:visible="visibleDeleteDialog"
+            v-model:categoryId="category.id"
+          />
         </div>
       </div>
       <div class="add-category-btn">
-        <div class="btn">+ 카테고리 추가</div>
+        <div class="btn" @click="handleOpenAddDialog">+ 카테고리 추가</div>
       </div>
     </div>
     <div class="edit-photo-container">
@@ -121,6 +137,7 @@ onMounted(() => {
       </el-select>
       <EditPhotoPage v-model:photos="photos" v-model:categoryId="categoryIdForPhoto" />
     </div>
+    <AddCategoryDialog v-model:visible="visibleAddDialog" />
   </div>
 </template>
 <style lang="scss" scoped>

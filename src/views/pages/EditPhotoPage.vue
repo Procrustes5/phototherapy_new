@@ -1,12 +1,12 @@
 <script lang="ts" setup>
+import { supabase } from '@/utils/supabase'
 import { useHomeStore } from '@store/homeStore.ts'
 import { storeToRefs } from 'pinia'
 import Drawer from '@view/ui-elements/UiPhotoDrawer.vue'
-import { useRoute } from 'vue-router'
 
-const route = useRoute()
 const photos = defineModel('photos')
 const categoryId = defineModel('categoryId')
+const category = ref()
 
 const homeStore = useHomeStore()
 const { clickedImage, isOpened } = storeToRefs(homeStore)
@@ -14,6 +14,13 @@ const handleDrawer = (img: string) => {
   clickedImage.value = img
   isOpened.value = true
 }
+const getCategory = async (): Promise<void> => {
+  let { data } = await supabase.from('category').select('*').eq('id', categoryId.value)
+  category.value = data
+}
+onMounted(() => {
+  getCategory()
+})
 </script>
 <template>
   <div class="main-wrapper">
@@ -35,6 +42,9 @@ const handleDrawer = (img: string) => {
         <span>Docu</span>
         <span class="and">&</span>
         <span>Snap</span>
+      </div>
+      <div class="conatus" v-else>
+        <span>{{ category.name }}</span>
       </div>
     </div>
     <div class="content-wrapper">
