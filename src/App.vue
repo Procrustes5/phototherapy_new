@@ -8,7 +8,7 @@ import Menu from '@view/ui-elements/UiMenuDrawer.vue'
 const categories = ref([])
 const route = useRoute()
 const getCategories = async (): Promise<void> => {
-  let { data } = await supabase.from('category').select('*').neq('id', 5).neq('id', 6)
+  let { data } = await supabase.from('category').select('*').neq('id', 5).neq('id', 6).order('id', { ascending: true })
   categories.value = data
 }
 

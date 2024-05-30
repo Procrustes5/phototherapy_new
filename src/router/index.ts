@@ -41,16 +41,6 @@ export const routes = [
     component: ProfilePage
   },
   {
-    path: '/edit/category',
-    component: EditCategoryPage,
-    meta: { requiresAuth: true }
-  },
-  {
-    path: '/edit/photo',
-    component: EditPhotoPage,
-    meta: { requiresAuth: true }
-  },
-  {
     path: '/upload',
     component: UploadPage,
     meta: { requiresAuth: true }

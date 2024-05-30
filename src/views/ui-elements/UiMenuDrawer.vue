@@ -85,14 +85,8 @@ onMounted(() => {
       </div>
       <div class="title" v-if="user">▼ Admin</div>
       <div class="menu-wrapper" v-if="user">
-        <div class="menu" @click="handleClickedAbout('edit/category')">
-          <span>카테고리 편집</span>
-        </div>
         <div class="menu" @click="handleClickedAbout('upload')">
-          <span>사진 업로드</span>
-        </div>
-        <div class="menu" @click="handleClickedAbout('edit/photo')">
-          <span>사진 편집</span>
+          <span>관리자</span>
         </div>
       </div>
     </div>

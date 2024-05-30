@@ -3,7 +3,7 @@ import { useHomeStore } from '@store/homeStore.ts'
 import { storeToRefs } from 'pinia'
 
 const homeStore = useHomeStore()
-const { clickedImage, isOpened } = storeToRefs(homeStore)
+const { clickedImage, clickedPhoto, isOpened } = storeToRefs(homeStore)
 const closeDrawer = () => {
   isOpened.value = false
 }
@@ -22,10 +22,10 @@ const closeDrawer = () => {
       <div class="img-wrapper">
         <el-image :src="clickedImage" fit="contain" class="drawer-img"> </el-image>
       </div>
-      <!-- <div class="story-wrapper">
-      <h3>Photo</h3>
-      <p>Story about the Photo</p>
-    </div> -->
+      <div class="story-wrapper">
+        <h3>{{ clickedPhoto.title }}</h3>
+        <p>{{ clickedPhoto.description }}</p>
+      </div>
     </div>
   </el-drawer>
 </template>

@@ -10,8 +10,8 @@ const uploadError = ref('')
 const categories = ref([])
 const selectedCategory = ref()
 const categoryIdForPhoto = ref<number>(1)
-const photos = ref([]);
-const isEditing = ref(false);
+const photos = ref([])
+const isEditing = ref(false)
 const visibleAddDialog = ref<boolean>(false)
 const visibleDeleteDialog = ref<boolean>(false)
 
@@ -59,7 +59,7 @@ const uploadPhoto = async (event) => {
   }
 }
 const getCategories = async (): Promise<void> => {
-  let { data } = await supabase.from('category').select('*')
+  let { data } = await supabase.from('category').select('*').order('id', { ascending: true })
   categories.value = data
 }
 
@@ -79,13 +79,9 @@ const handleOpenDeleteDialog = () => {
   visibleDeleteDialog.value = true
 }
 
-const handleEditCategory = async(id: number, name: string): Promise<void> => {
-  const { data, error } = await supabase
-    .from('category')
-    .update({ name })
-    .eq('id', id)
-    .select()
-  isEditing.value = false;
+const handleEditCategory = async (id: number, name: string): Promise<void> => {
+  const { data, error } = await supabase.from('category').update({ name }).eq('id', id).select()
+  isEditing.value = false
 }
 
 watch(categoryIdForPhoto, (id: number) => {
@@ -131,10 +127,16 @@ onMounted(() => {
               </el-input>
             </div>
             <div class="btn-wrapper">
-              <div class="btn" v-if="!isEditing" @click="() => isEditing = true">편집</div>
+              <div class="btn" v-if="!isEditing" @click="() => (isEditing = true)">편집</div>
               <div class="btn delete" v-if="!isEditing" @click="handleOpenDeleteDialog">삭제</div>
-              <div class="btn delete" v-if="isEditing" @click="() => isEditing = false">취소</div>
-              <div class="btn" v-if="isEditing" @click="handleEditCategory(category.id, category.name)">확인</div>
+              <div class="btn delete" v-if="isEditing" @click="() => (isEditing = false)">취소</div>
+              <div
+                class="btn"
+                v-if="isEditing"
+                @click="handleEditCategory(category.id, category.name)"
+              >
+                확인
+              </div>
             </div>
             <DeleteCategoryDialog
               v-model:visible="visibleDeleteDialog"
@@ -178,7 +180,6 @@ onMounted(() => {
   }
   .description {
     margin-left: 8px;
-
   }
   span {
     color: whitesmoke;

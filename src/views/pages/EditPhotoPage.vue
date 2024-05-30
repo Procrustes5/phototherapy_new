@@ -54,11 +54,7 @@ onMounted(() => {
       </div>
       <div class="content">
         <div v-for="(photo, index) in photos" :key="index" class="content-img">
-          <el-image
-            :src="photo.content"
-            class="img"
-            @click="handleDrawer(photo)"
-          ></el-image>
+          <el-image :src="photo.content" class="img" @click="handleDrawer(photo)"></el-image>
         </div>
       </div>
     </div>
