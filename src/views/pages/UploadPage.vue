@@ -5,13 +5,13 @@ import EditPhotoPage from './EditPhotoPage.vue'
 import AddCategoryDialog from '../ui-elements/AddCategoryDialog.vue'
 import DeleteCategoryDialog from '../ui-elements/DeleteCategoryDialog.vue'
 
-const uploading = ref(false)
-const uploadError = ref('')
+const uploading = ref<boolean>(false)
+const uploadError = ref<string>('')
 const categories = ref([])
 const selectedCategory = ref()
 const categoryIdForPhoto = ref<number>(1)
 const photos = ref([])
-const isEditing = ref(false)
+const isEditing = ref<boolean>(false)
 const visibleAddDialog = ref<boolean>(false)
 const visibleDeleteDialog = ref<boolean>(false)
 

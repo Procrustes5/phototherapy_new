@@ -3,6 +3,7 @@ import { supabase } from '@/utils/supabase'
 import { useHomeStore } from '@store/homeStore.ts'
 import { storeToRefs } from 'pinia'
 import Drawer from '@view/ui-elements/EditPhotoDrawer.vue'
+import draggable from 'vuedraggable'
 
 const photos = defineModel('photos')
 const categoryId = defineModel('categoryId')
@@ -15,14 +16,27 @@ const handleDrawer = (photo) => {
   clickedPhoto.value = photo
   isOpened.value = true
 }
+
 const getCategory = async (): Promise<void> => {
   let { data } = await supabase.from('category').select('*').eq('id', categoryId.value)
   category.value = data
 }
+
+const saveOrder = async (): Promise<void> => {
+  const updates = photos.value.forEach(async (photo, index) => {
+    const { error } = await supabase
+      .from('photo')
+      .update({ index })
+      .eq('id', photo.id)
+      .select()
+    })
+}
+
 onMounted(() => {
   getCategory()
 })
 </script>
+
 <template>
   <div class="main-wrapper">
     <div class="main-image-wrapper">
@@ -53,14 +67,22 @@ onMounted(() => {
         <span>PHOTOS</span>
       </div>
       <div class="content">
-        <div v-for="(photo, index) in photos" :key="index" class="content-img">
-          <el-image :src="photo.content" class="img" @click="handleDrawer(photo)"></el-image>
-        </div>
+        <draggable v-model="photos" group="photos" item-key="id" tag="ul" @end="saveOrder">
+          <template #item="{photo, index}">
+            <div>
+              <el-image :src="photos[index].content" class="img" @click="handleDrawer(photo)"></el-image>
+            </div> 
+          </template>
+          <!-- <div v-for="(photo, index) in photos" :key="photo.id" class="content-img">
+            
+          </div> -->
+        </draggable>
       </div>
     </div>
   </div>
   <Drawer />
 </template>
+
 <style lang="scss" scoped>
 @import '@style/global.scss';
 .main-wrapper {
@@ -170,7 +192,7 @@ onMounted(() => {
         font-weight: 600;
       }
     }
-    .content {
+    ul {
       width: 80%;
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
@@ -234,8 +256,7 @@ onMounted(() => {
         position: absolute;
         display: flex;
         justify-content: center;
-        align-items: center;
-        span {
+        align-items: center        span {
           font-size: 60px;
           font-weight: 800;
           color: white;
@@ -314,7 +335,7 @@ onMounted(() => {
   }
 }
 </style>
-<style lang="scss" scope>
+<style lang="scss" scoped>
 img {
   object-fit: cover;
 }
