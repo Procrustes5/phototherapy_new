@@ -69,13 +69,10 @@ onMounted(() => {
       <div class="content">
         <draggable v-model="photos" group="photos" item-key="id" tag="ul" @end="saveOrder">
           <template #item="{photo, index}">
-            <div>
-              <el-image :src="photos[index].content" class="img" @click="handleDrawer(photo)"></el-image>
+            <div class="photo-wrapper">
+              <el-image :src="photos[index].content" class="img" @click="handleDrawer(photos[index])"></el-image>
             </div> 
           </template>
-          <!-- <div v-for="(photo, index) in photos" :key="photo.id" class="content-img">
-            
-          </div> -->
         </draggable>
       </div>
     </div>
@@ -192,13 +189,17 @@ onMounted(() => {
         font-weight: 600;
       }
     }
+    .content {
+      display: flex;
+      justify-content: center;
+    }
     ul {
       width: 80%;
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       gap: 5px;
       padding: 0px 30px;
-      .content-img {
+      .photo-wrapper {
         height: 35vh;
         .img {
           width: 100%;
