@@ -17,7 +17,7 @@ const handleSubmit = async () => {
     .eq('id', clickedPhoto.value.id)
     .select()
   console.log(error)
-  router.go(0);
+  router.go(0)
 }
 </script>
 <template>
@@ -34,8 +34,15 @@ const handleSubmit = async () => {
         <el-image :src="clickedImage" fit="contain" class="drawer-img"> </el-image>
       </div>
       <div class="story-wrapper">
-        <el-input v-model="clickedPhoto.title" placeholder="제목" />
-        <el-input v-model="clickedPhoto.description" placeholder="설명" type="textarea" />
+        <el-input v-model="clickedPhoto.title" placeholder="제목" class="photo-input" />
+        <el-input
+          v-model="clickedPhoto.description"
+          placeholder="설명"
+          type="textarea"
+          autosize
+          class="photo-input photo-textarea"
+          min="3"
+        />
         <div>
           <el-button type="primary" @click="handleSubmit">변경사항 적용</el-button>
         </div>
@@ -46,5 +53,20 @@ const handleSubmit = async () => {
 
 <style lang="scss" scoped>
 @import '@style/photo-drawer.scss';
+.story-wrapper {
+  width: 100% !important;
+  .photo-input {
+    width: 100%;
+    margin-bottom: 8px;
+  }
+}
 </style>
-<style lang="scss" scope></style>
+<style lang="scss" scope>
+.story-wrapper {
+  .photo-textarea {
+    .el-textarea__inner {
+      min-height: 150px !important;
+    }
+  }
+}
+</style>

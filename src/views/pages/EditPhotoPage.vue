@@ -24,12 +24,8 @@ const getCategory = async (): Promise<void> => {
 
 const saveOrder = async (): Promise<void> => {
   const updates = photos.value.forEach(async (photo, index) => {
-    const { error } = await supabase
-      .from('photo')
-      .update({ index })
-      .eq('id', photo.id)
-      .select()
-    })
+    const { error } = await supabase.from('photo').update({ index }).eq('id', photo.id).select()
+  })
 }
 
 onMounted(() => {
@@ -68,10 +64,14 @@ onMounted(() => {
       </div>
       <div class="content">
         <draggable v-model="photos" group="photos" item-key="id" tag="ul" @end="saveOrder">
-          <template #item="{photo, index}">
+          <template #item="{ photo, index }">
             <div class="photo-wrapper">
-              <el-image :src="photos[index].content" class="img" @click="handleDrawer(photos[index])"></el-image>
-            </div> 
+              <el-image
+                :src="photos[index].content"
+                class="img"
+                @click="handleDrawer(photos[index])"
+              ></el-image>
+            </div>
           </template>
         </draggable>
       </div>
@@ -257,7 +257,7 @@ onMounted(() => {
         position: absolute;
         display: flex;
         justify-content: center;
-        align-items: center        span {
+        align-items: center span {
           font-size: 60px;
           font-weight: 800;
           color: white;
