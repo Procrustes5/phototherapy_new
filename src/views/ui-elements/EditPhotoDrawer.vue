@@ -16,7 +16,6 @@ const handleSubmit = async () => {
     .update({ title: clickedPhoto.value.title, description: clickedPhoto.value.description })
     .eq('id', clickedPhoto.value.id)
     .select()
-  console.log(error)
   router.go(0)
 }
 </script>

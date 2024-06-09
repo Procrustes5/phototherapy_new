@@ -84,6 +84,7 @@ setInterval(() => {
 .header {
   width: 100%;
   height: 100%;
+  padding: 100px;
   background: $main;
   position: relative;
   display: flex;
@@ -97,15 +98,16 @@ setInterval(() => {
   height: 92px;
 }
 .main-image {
+  min-width: 100%;
   height: 100%;
   position: absolute;
   transition: opacity 1s ease;
   opacity: 0;
   box-sizing: border-box;
+  border: 30px solid whitesmoke;
   .img {
-    min-width: 100%;
+    width: 100%;
     height: 90%;
-    border: 30px solid whitesmoke;
     box-sizing: border-box;
   }
 }
