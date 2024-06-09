@@ -245,8 +245,13 @@ setInterval(() => {
     position: absolute;
     transition: opacity 1s ease;
     opacity: 0;
+    height: fit-content;
     .img {
       width: 100%;
+      height: auto;
+      img {
+        height: 100% !important;
+      }
     }
   }
   .main-image.active {
