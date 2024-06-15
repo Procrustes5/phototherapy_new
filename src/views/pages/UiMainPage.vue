@@ -226,6 +226,7 @@ setInterval(() => {
     }
   }
 }
+
 @media screen and (max-width: 767px) {
   .header {
     width: 100%;

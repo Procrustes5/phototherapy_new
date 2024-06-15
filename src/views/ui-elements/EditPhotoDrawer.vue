@@ -3,6 +3,7 @@ import { useHomeStore } from '@store/homeStore.ts'
 import { storeToRefs } from 'pinia'
 import { supabase } from '@/utils/supabase'
 import { useRouter } from 'vue-router'
+import { calendarEmits } from 'element-plus';
 
 const router = useRouter()
 const homeStore = useHomeStore()
@@ -42,7 +43,7 @@ const handleSubmit = async () => {
           class="photo-input photo-textarea"
           min="3"
         />
-        <div>
+        <div class="btn-wrapper">
           <el-button type="primary" @click="handleSubmit">변경사항 적용</el-button>
         </div>
       </div>
@@ -52,11 +53,24 @@ const handleSubmit = async () => {
 
 <style lang="scss" scoped>
 @import '@style/photo-drawer.scss';
+.drawer-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .story-wrapper {
-  width: 100% !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 70% !important;
   .photo-input {
     width: 100%;
     margin-bottom: 8px;
+  }
+  .btn-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: end;
   }
 }
 </style>
