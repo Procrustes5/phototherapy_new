@@ -3,10 +3,12 @@ import { useHomeStore } from '@store/homeStore.ts'
 import { storeToRefs } from 'pinia'
 import { supabase } from '@/utils/supabase'
 import { useRouter } from 'vue-router'
-import { calendarEmits } from 'element-plus';
 
 const router = useRouter()
 const homeStore = useHomeStore()
+
+const visible = ref<boolean>(false);
+
 const { clickedImage, clickedPhoto, isOpened } = storeToRefs(homeStore)
 const closeDrawer = () => {
   isOpened.value = false
@@ -16,8 +18,16 @@ const handleSubmit = async () => {
     .from('photo')
     .update({ title: clickedPhoto.value.title, description: clickedPhoto.value.description })
     .eq('id', clickedPhoto.value.id)
-    .select()
-  router.go(0)
+    .select();
+  router.go(0);
+}
+
+const handleDelete = async () => {
+  const { error } = await supabase
+    .from('photo')
+    .delete()
+    .eq('id', clickedPhoto.value.id);
+  router.go(0);
 }
 </script>
 <template>
@@ -44,10 +54,26 @@ const handleSubmit = async () => {
           min="3"
         />
         <div class="btn-wrapper">
+          <el-button type="danger" @click="visible = true">삭제</el-button>
           <el-button type="primary" @click="handleSubmit">변경사항 적용</el-button>
         </div>
       </div>
     </div>
+    <el-dialog
+      v-model="visible"
+      title="사진을 삭제하시겠습니까?"
+      class="delete-photo-dialog"
+    >
+      <div class="delete-dialog">
+        <span class="dialog-text">해당 사진은 영구적으로 삭제됩니다.</span>
+      </div>
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button @click="visible = false">취소</el-button>
+          <el-button type="danger" @click="handleDelete">확인</el-button>
+        </div>
+      </template>
+    </el-dialog>
   </el-drawer>
 </template>
 
@@ -79,6 +105,16 @@ const handleSubmit = async () => {
   .photo-textarea {
     .el-textarea__inner {
       min-height: 150px !important;
+    }
+  }
+}
+.delete-photo-dialog {
+  span {
+    color: black !important;
+  }
+  .el-button--danger {
+    span {
+      color: white !important;
     }
   }
 }
