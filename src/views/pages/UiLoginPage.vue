@@ -11,39 +11,36 @@ const passwordError = ref('')
 
 const getLoginPhoto = async (): Promise<void> => {
   let { data } = await supabase.from('photo').select('*').eq('id', 100)
-  photo.value = data
-}
+  photo.value = data;
+};
 
 const validateEmail = () => {
   const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
   emailError.value = regex.test(email.value) ? '' : 'Invalid email address'
-}
-
-const validatePassword = () => {
-  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
-  passwordError.value = regex.test(password.value)
-    ? ''
-    : 'Password must be at least 8 characters long and include an uppercase letter, a lowercase letter, a number, and a special character'
-}
+};
 
 const isFormValid = computed(
-  () => !emailError.value && !passwordError.value && email.value && password.value
-)
+  () => !emailError.value && email.value
+);
 
 const login = async () => {
   try {
-    const { error } = await supabase.auth.signInWithPassword({
+    const { data, error } = await supabase.auth.signInWithOtp({
       email: email.value,
-      password: password.value
-    })
-    console.log(error)
+      options: {
+        // set this to false if you do not want the user to be automatically signed up
+        shouldCreateUser: false,
+        emailRedirectTo: 'https://phototherapy.kr',
+      },
+    });
+    console.log(error);
     if (error) throw error
-    alert('Login successful')
-    router.push('/')
+    alert('입력하신 메일 주소로 로그인 확인 메일을 발송하였습니다.');
+    router.push('/');
   } catch (error) {
-    alert(error.message)
+    alert(error.message);
   }
-}
+};
 
 onMounted(() => {
   getLoginPhoto()
@@ -60,15 +57,6 @@ onMounted(() => {
         <div class="form-item">
           <span>Email</span>
           <el-input @input="validateEmail" placeholder="email" type="email" v-model="email" />
-        </div>
-        <div class="form-item">
-          <span>Password</span>
-          <el-input
-            @input="validatePassword"
-            placeholder="password"
-            type="password"
-            v-model="password"
-          />
         </div>
       </div>
       <div class="btn-wrapper">
