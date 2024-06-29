@@ -64,10 +64,7 @@ const getCategories = async (): Promise<void> => {
 }
 
 const getPhotoByCategory = async (categoryId: number): Promise<void> => {
-  let { data: photo } = await supabase
-    .from('photo')
-    .select('*')
-    .eq('category_id', categoryId)
+  let { data: photo } = await supabase.from('photo').select('*').eq('category_id', categoryId)
   photos.value = photo
 }
 
