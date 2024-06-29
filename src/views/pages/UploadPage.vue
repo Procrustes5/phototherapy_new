@@ -42,7 +42,7 @@ const uploadPhoto = async (event) => {
 
     const storageFormerUrl = 'https://xcufblnekuysvojkwbot.supabase.co/storage/v1/object/public/'
 
-    const { data: photo, error: postPhotoError } = await supabase
+    const { error: postPhotoError } = await supabase
       .from('photo')
       .insert([
         { content: storageFormerUrl.concat(data.fullPath), category_id: selectedCategory.value }
@@ -64,7 +64,7 @@ const getCategories = async (): Promise<void> => {
 }
 
 const getPhotoByCategory = async (categoryId: number): Promise<void> => {
-  let { data: photo, error } = await supabase
+  let { data: photo } = await supabase
     .from('photo')
     .select('*')
     .eq('category_id', categoryId)
@@ -80,7 +80,8 @@ const handleOpenDeleteDialog = () => {
 }
 
 const handleEditCategory = async (id: number, name: string): Promise<void> => {
-  const { data, error } = await supabase.from('category').update({ name }).eq('id', id).select()
+  const { error } = await supabase.from('category').update({ name }).eq('id', id).select()
+  if (error) throw error
   isEditing.value = false
 }
 

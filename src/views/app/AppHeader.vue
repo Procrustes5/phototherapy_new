@@ -4,7 +4,7 @@ import { useMenuStore } from '@store/menuStore.ts'
 import { storeToRefs } from 'pinia'
 
 const menuStore = useMenuStore()
-const { clickedIcon, isOpened } = storeToRefs(menuStore)
+const { isOpened } = storeToRefs(menuStore)
 const router = useRouter()
 
 const handleMenu = () => {

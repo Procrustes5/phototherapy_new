@@ -7,7 +7,7 @@ import { supabase } from '@/utils/supabase'
 const categories = defineModel('categories')
 const menuStore = useMenuStore()
 const router = useRouter()
-const { clickedIcon, isOpened } = storeToRefs(menuStore)
+const { isOpened } = storeToRefs(menuStore)
 const user = ref()
 
 const closeMenu = (): void => {

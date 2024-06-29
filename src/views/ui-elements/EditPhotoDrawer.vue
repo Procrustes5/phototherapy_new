@@ -14,17 +14,19 @@ const closeDrawer = () => {
   isOpened.value = false
 }
 const handleSubmit = async () => {
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from('photo')
     .update({ title: clickedPhoto.value.title, description: clickedPhoto.value.description })
     .eq('id', clickedPhoto.value.id)
     .select()
   router.go(0)
+  if (error) throw error
 }
 
 const handleDelete = async () => {
   const { error } = await supabase.from('photo').delete().eq('id', clickedPhoto.value.id)
   router.go(0)
+  if (error) throw error
 }
 </script>
 <template>

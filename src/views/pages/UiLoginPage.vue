@@ -5,9 +5,7 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 const photo = ref([])
 const email = ref('')
-const password = ref('')
 const emailError = ref('')
-const passwordError = ref('')
 
 const getLoginPhoto = async (): Promise<void> => {
   let { data } = await supabase.from('photo').select('*').eq('id', 100)
@@ -15,15 +13,13 @@ const getLoginPhoto = async (): Promise<void> => {
 }
 
 const validateEmail = () => {
-  const regex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
+  const regex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/
   emailError.value = regex.test(email.value) ? '' : 'Invalid email address'
 }
 
-const isFormValid = computed(() => !emailError.value && email.value)
-
 const login = async () => {
   try {
-    const { data, error } = await supabase.auth.signInWithOtp({
+    const { error } = await supabase.auth.signInWithOtp({
       email: email.value,
       options: {
         // set this to false if you do not want the user to be automatically signed up

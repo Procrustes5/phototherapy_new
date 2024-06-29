@@ -13,6 +13,7 @@ const closeDialog = (): void => {
 const confirmDialog = async (): Promise<void> => {
   const { error } = await supabase.from('category').delete().eq('id', categoryId.value)
   await router.go(0)
+  if (error) throw error
 }
 
 const handleClose = (): void => {

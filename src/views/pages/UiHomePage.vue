@@ -5,7 +5,6 @@ import { supabase } from '@/utils/supabase'
 import Drawer from '@view/ui-elements/UiPhotoDrawer.vue'
 
 const photos = ref([])
-const categories = defineModel('categories')
 const homeStore = useHomeStore()
 const { clickedImage, isOpened } = storeToRefs(homeStore)
 const handleDrawer = (img) => {

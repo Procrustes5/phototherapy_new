@@ -11,11 +11,12 @@ const closeDialog = (): void => {
 }
 
 const confirmDialog = async (): Promise<void> => {
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from('category')
     .insert([{ name: name.value }])
     .select()
   await router.go(0)
+  if (error) throw error
 }
 
 const handleClose = (): void => {

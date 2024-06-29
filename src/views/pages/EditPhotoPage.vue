@@ -23,9 +23,14 @@ const getCategory = async (): Promise<void> => {
 }
 
 const saveOrder = async (): Promise<void> => {
-  const updates = photos.value.forEach(async (photo, index) => {
-    const { error } = await supabase.from('photo').update({ index }).eq('id', photo.id).select()
-  })
+  const updateOrder = () => {
+    photos.value.forEach(async (photo, index) => {
+      const { error } = await supabase.from('photo').update({ index }).eq('id', photo.id).select()
+      if (error) throw error
+    })
+  }
+
+  updateOrder()
 }
 
 onMounted(() => {

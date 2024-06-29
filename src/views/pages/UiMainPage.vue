@@ -1,24 +1,18 @@
 <script setup lang="ts">
-import { onMounted, ref, onUnmounted } from 'vue'
-import { useRouter } from 'vue-router'
-import { useMenuStore } from '@store/menuStore.ts'
-import { storeToRefs } from 'pinia'
 import UiHomePage from './UiHomePage.vue'
 import AppHeader from '@app/AppHeader.vue'
 import AppFooter from '@app/AppFooter.vue'
 import { supabase } from '@/utils/supabase'
 
-const menuStore = useMenuStore()
 const categories = defineModel('categories')
-const { clickedIcon, isOpened } = storeToRefs(menuStore)
-const router = useRouter()
+
 const photos = ref([])
 const currentIndex = ref(0)
 const isSlideShown = ref(true)
 const headerRef = ref()
 
 const getSlidePhotos = async (): Promise<void> => {
-  let { data, error } = await supabase.from('photo').select('*').eq('category_id', 5)
+  let { data } = await supabase.from('photo').select('*').eq('category_id', 5)
   photos.value = data
 }
 
