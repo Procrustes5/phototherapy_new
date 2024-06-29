@@ -59,7 +59,7 @@ setInterval(() => {
     <app-header v-show="!isSlideShown" class="main-header" />
     <div class="content">
       <div class="header-spacing"></div>
-      <UiHomePage v-model:categories="categories" />
+      <UiHomePage />
       <app-footer />
     </div>
   </div>
