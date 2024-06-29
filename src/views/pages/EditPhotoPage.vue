@@ -61,7 +61,7 @@ onMounted(() => {
     <div class="content-wrapper">
       <div class="content-header">
         <span>PHOTOS</span>
-        <hr></hr>
+        <hr />
         <span>사진을 드래그하면 배치를 변경할 수 있습니다.</span>
       </div>
       <div class="content">

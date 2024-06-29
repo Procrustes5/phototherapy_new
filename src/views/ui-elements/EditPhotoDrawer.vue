@@ -7,7 +7,7 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 const homeStore = useHomeStore()
 
-const visible = ref<boolean>(false);
+const visible = ref<boolean>(false)
 
 const { clickedImage, clickedPhoto, isOpened } = storeToRefs(homeStore)
 const closeDrawer = () => {
@@ -18,16 +18,13 @@ const handleSubmit = async () => {
     .from('photo')
     .update({ title: clickedPhoto.value.title, description: clickedPhoto.value.description })
     .eq('id', clickedPhoto.value.id)
-    .select();
-  router.go(0);
+    .select()
+  router.go(0)
 }
 
 const handleDelete = async () => {
-  const { error } = await supabase
-    .from('photo')
-    .delete()
-    .eq('id', clickedPhoto.value.id);
-  router.go(0);
+  const { error } = await supabase.from('photo').delete().eq('id', clickedPhoto.value.id)
+  router.go(0)
 }
 </script>
 <template>
@@ -59,11 +56,7 @@ const handleDelete = async () => {
         </div>
       </div>
     </div>
-    <el-dialog
-      v-model="visible"
-      title="사진을 삭제하시겠습니까?"
-      class="delete-photo-dialog"
-    >
+    <el-dialog v-model="visible" title="사진을 삭제하시겠습니까?" class="delete-photo-dialog">
       <div class="delete-dialog">
         <span class="dialog-text">해당 사진은 영구적으로 삭제됩니다.</span>
       </div>

@@ -11,17 +11,15 @@ const passwordError = ref('')
 
 const getLoginPhoto = async (): Promise<void> => {
   let { data } = await supabase.from('photo').select('*').eq('id', 100)
-  photo.value = data;
-};
+  photo.value = data
+}
 
 const validateEmail = () => {
   const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
   emailError.value = regex.test(email.value) ? '' : 'Invalid email address'
-};
+}
 
-const isFormValid = computed(
-  () => !emailError.value && email.value
-);
+const isFormValid = computed(() => !emailError.value && email.value)
 
 const login = async () => {
   try {
@@ -30,17 +28,17 @@ const login = async () => {
       options: {
         // set this to false if you do not want the user to be automatically signed up
         shouldCreateUser: false,
-        emailRedirectTo: 'https://phototherapy.kr',
-      },
-    });
-    console.log(error);
+        emailRedirectTo: 'https://phototherapy.kr'
+      }
+    })
+    console.log(error)
     if (error) throw error
-    alert('입력하신 메일 주소로 로그인 확인 메일을 발송하였습니다.');
-    router.push('/');
+    alert('입력하신 메일 주소로 로그인 확인 메일을 발송하였습니다.')
+    router.push('/')
   } catch (error) {
-    alert(error.message);
+    alert(error.message)
   }
-};
+}
 
 onMounted(() => {
   getLoginPhoto()
