@@ -31,6 +31,7 @@ onMounted(() => {
     <div class="middle-image">
       <el-image
         v-for="(photo, index) in photos.slice(1, 9)"
+        :key="photo.id"
         class="ml-img"
         :class="`ml-img${index + 1}`"
         :src="photo?.content"

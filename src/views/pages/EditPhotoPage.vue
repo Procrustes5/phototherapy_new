@@ -71,6 +71,7 @@ onMounted(() => {
               <el-image
                 :src="photos[index].content"
                 class="img"
+                :id="photo"
                 @click="handleDrawer(photos[index])"
               ></el-image>
             </div>

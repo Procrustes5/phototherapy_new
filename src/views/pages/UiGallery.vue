@@ -5,24 +5,26 @@ import Drawer from '@view/ui-elements/UiPhotoDrawer.vue'
 import { useRoute } from 'vue-router'
 import { supabase } from '@/utils/supabase'
 
-const route = useRoute()
-const photos = ref([])
+const route = useRoute();
+const photos = ref([]);
+
 const getGalleryPhotos = async (): Promise<void> => {
   let { data } = await supabase.from('photo').select('*').eq('category_id', route?.params?.id)
-  photos.value = data
+  photos.value = data;
 }
 const homeStore = useHomeStore()
-const { clickedImage, isOpened } = storeToRefs(homeStore)
-const handleDrawer = (img: string) => {
-  clickedImage.value = img
-  isOpened.value = true
+const { clickedPhoto, clickedImage, isOpened } = storeToRefs(homeStore)
+const handleDrawer = (photo) => {
+  clickedImage.value = photo.content;
+  clickedPhoto.value = photo;
+  isOpened.value = true;
 }
 window.scrollTo({ top: 0, behavior: 'smooth' })
 onMounted(() => {
-  getGalleryPhotos()
+  getGalleryPhotos();
 })
 watch(route, () => {
-  getGalleryPhotos()
+  getGalleryPhotos();
 })
 </script>
 <template>
@@ -56,7 +58,7 @@ watch(route, () => {
           <el-image
             :src="photo.content"
             class="img"
-            @click="handleDrawer(photo.content)"
+            @click="handleDrawer(photo)"
           ></el-image>
         </div>
       </div>

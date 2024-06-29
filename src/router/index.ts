@@ -7,8 +7,6 @@ import LoginPage from '@pages/UiLoginPage.vue'
 import GalleryPage from '@pages/UiGallery.vue'
 import DirectionPage from '@pages/UiDirection.vue'
 import ProfilePage from '@pages/UiProfile.vue'
-import EditCategoryPage from '@pages/EditCategory.vue'
-import EditPhotoPage from '@pages/EditPhotoPage.vue'
 import UploadPage from '@pages/UploadPage.vue'
 
 export const routes = [
@@ -28,7 +26,7 @@ export const routes = [
   {
     path: '/gallery/:id(\\d+)',
     component: GalleryPage,
-    scrollBehavior(to, from, savedPosition) {
+    scrollBehavior() {
       return { top: 0 }
     }
   },
@@ -55,7 +53,7 @@ export const routes = [
 export const router = createRouter({
   history: createWebHistory(),
   routes,
-  scrollBehavior(to, from, savedPosition) {
+  scrollBehavior() {
     document.getElementById('app').scrollTop = 0
   }
 })

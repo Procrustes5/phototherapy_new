@@ -15,7 +15,7 @@ const getLoginPhoto = async (): Promise<void> => {
 }
 
 const validateEmail = () => {
-  const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+  const regex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
   emailError.value = regex.test(email.value) ? '' : 'Invalid email address'
 }
 
