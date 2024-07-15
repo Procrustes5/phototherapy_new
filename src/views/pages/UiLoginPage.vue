@@ -22,12 +22,11 @@ const login = async () => {
     const { error } = await supabase.auth.signInWithOtp({
       email: email.value,
       options: {
-        // set this to false if you do not want the user to be automatically signed up
         shouldCreateUser: false,
         emailRedirectTo: 'https://phototherapy.kr'
       }
     })
-    console.log(error)
+
     if (error) throw error
     alert('입력하신 메일 주소로 로그인 확인 메일을 발송하였습니다.')
     router.push('/')
