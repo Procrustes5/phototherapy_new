@@ -45,6 +45,17 @@ const getCurrentUser = async () => {
 const handleLogin = async (): Promise<void> => {
   router.push('/login')
 }
+
+const handleLogout = async () => {
+  try {
+    const { error } = await supabase.auth.signOut()
+    if (error) throw error
+    alert('로그아웃했습니다.')
+  } catch (error) {
+    alert(error.message)
+  }
+}
+
 onMounted(() => {
   getCurrentUser()
   supabase.auth.onAuthStateChange((_event, session) => {
@@ -90,9 +101,10 @@ onMounted(() => {
         </div>
       </div>
     </div>
-    <div class="lower-wrapper" v-if="!user">
+    <div class="lower-wrapper">
       <el-icon :size="20"><User /></el-icon>
-      <span @click="handleLogin">Admin Login</span>
+      <span @click="handleLogin" v-if="!user">Admin Login</span>
+      <span @click="handleLogout" v-else>Logout</span>
     </div>
   </el-drawer>
 </template>
