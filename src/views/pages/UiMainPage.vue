@@ -3,6 +3,7 @@ import UiHomePage from './UiHomePage.vue'
 import AppHeader from '@app/AppHeader.vue'
 import AppFooter from '@app/AppFooter.vue'
 import { supabase } from '@/utils/supabase'
+import { ElImage, ElLoading } from 'element-plus'
 
 const categories = defineModel('categories')
 
@@ -10,10 +11,13 @@ const photos = ref([])
 const currentIndex = ref(0)
 const isSlideShown = ref(true)
 const headerRef = ref()
+const isLoading = ref(true)
 
 const getSlidePhotos = async (): Promise<void> => {
+  isLoading.value = true
   let { data } = await supabase.from('photo').select('*').eq('category_id', 5)
   photos.value = data
+  isLoading.value = false
 }
 
 onMounted(() => {
@@ -36,20 +40,53 @@ onMounted(() => {
 })
 
 setInterval(() => {
-  currentIndex.value = (currentIndex.value + 1) % photos.value.length
+  if (!isLoading.value) {
+    currentIndex.value = (currentIndex.value + 1) % photos.value.length
+  }
 }, 3000)
+
+const loadImage = (src: string): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    const img = new Image()
+    img.onload = () => resolve()
+    img.onerror = reject
+    img.src = src
+  })
+}
+
+const preloadFirstImage = async () => {
+  if (photos.value.length > 0) {
+    await loadImage(photos.value[0].content)
+  }
+}
+
+watch(photos, preloadFirstImage, { immediate: true })
 </script>
+
 <template>
   <div class="wrapper">
     <div class="header" ref="headerRef">
+      <el-loading :fullscreen="true" v-if="isLoading" />
       <div
         class="main-image"
         v-for="(image, index) in photos"
         :key="index"
         :class="{ active: index === currentIndex }"
       >
-        <div class="sized-box" v-if="!photos"></div>
-        <el-image :src="image.content" :lazy="index !== 0" class="img" v-else></el-image>
+        <div class="sized-box" v-if="!photos.length"></div>
+        <el-image 
+          :src="image.content" 
+          :lazy="index !== 0" 
+          class="img" 
+          v-else
+          :loading="index === 0 ? 'eager' : 'lazy'"
+        >
+          <template #placeholder>
+            <div class="image-placeholder">
+              <el-loading />
+            </div>
+          </template>
+        </el-image>
       </div>
       <div class="fixed-content" :class="{ active: currentIndex === 0 }">
         <div class="title">Phototherapy</div>
@@ -164,6 +201,15 @@ setInterval(() => {
   width: 100%;
   height: 100%;
   position: relative;
+}
+
+.image-placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: #f0f0f0;
 }
 @media screen and (max-width: 1023px) {
   .header {
