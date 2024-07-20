@@ -7,7 +7,7 @@
   opacity: 0;
   animation: fadeInUp 1.5s ease-out forwards;
   .top-image {
-    height: calc(100vh - 100px);
+    width: 100%;
   }
   .middle-image {
     width: 100%;
@@ -39,9 +39,6 @@
     background: $main;
     opacity: 0;
     animation: fadeInUp 1.5s ease-out forwards;
-    .top-image {
-      height: calc(100vh - 100px);
-    }
     .middle-image {
       width: 100%;
       display: grid;

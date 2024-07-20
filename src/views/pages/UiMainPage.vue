@@ -114,7 +114,6 @@ watch(photos, preloadFirstImage, { immediate: true })
 }
 .header {
   width: 100%;
-  height: 100%;
   padding: 100px;
   background: $main;
   position: relative;
@@ -211,6 +210,12 @@ watch(photos, preloadFirstImage, { immediate: true })
   height: 100%;
   background-color: #f0f0f0;
 }
+@media screen and (min-width: 1023px) {
+  .header {
+    height: 100%;
+  }
+}
+
 @media screen and (max-width: 1023px) {
   .header {
     width: 100%;
@@ -270,7 +275,8 @@ watch(photos, preloadFirstImage, { immediate: true })
 @media screen and (max-width: 767px) {
   .header {
     width: 100%;
-    height: 100%;
+    height: 50vh;
+    padding: 0;
     position: relative;
     display: flex;
     align-items: center;
@@ -279,17 +285,17 @@ watch(photos, preloadFirstImage, { immediate: true })
     animation: fadeInUp 1.5s ease-out forwards;
   }
   .sizedBox {
-    height: 300px;
+    height: 30px;
     background: $main;
   }
   .main-image {
     position: absolute;
     transition: opacity 1s ease;
     opacity: 0;
-    height: fit-content;
+    height: 100%;
+    border: 15px solid whitesmoke;
     .img {
       width: 100%;
-      height: auto;
       img {
         height: 100% !important;
       }
@@ -300,7 +306,6 @@ watch(photos, preloadFirstImage, { immediate: true })
   }
   .fixed-content {
     width: 100%;
-    height: 100%;
     position: fixed;
     display: flex;
     flex-direction: column;
@@ -333,6 +338,12 @@ watch(photos, preloadFirstImage, { immediate: true })
       padding: 2px 4px;
       margin-top: 16px;
     }
+  }
+  .content {
+    padding: 12px;
+  }
+  .header-spacing {
+    height: 12px;
   }
 }
 </style>
