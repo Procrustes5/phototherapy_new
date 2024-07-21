@@ -23,8 +23,8 @@ const closeDrawer = () => {
         <el-image :src="clickedImage" fit="contain" class="drawer-img"> </el-image>
       </div>
       <div class="story-wrapper">
-        <h3>{{ clickedPhoto.title }}</h3>
-        <p>{{ clickedPhoto.description }}</p>
+        <h3>{{ clickedPhoto?.title ?? '' }}</h3>
+        <p>{{ clickedPhoto?.description ?? '' }}</p>
       </div>
     </div>
   </el-drawer>
