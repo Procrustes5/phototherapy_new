@@ -33,17 +33,16 @@ watch(route, () => {
       <div class="main-image">
         <el-image :src="photos[0]?.content" alt="loading" class="img"></el-image>
       </div>
-      <div class="conatus" v-if="route.params.id === '1'">
+      <div class="conatus main-img" v-if="route.params.id === '1'">
         <span>Conatus</span>
       </div>
-      <div class="moment" v-else-if="route.params.id === '2'">
+      <div class="moment main-img" v-else-if="route.params.id === '2'">
         <span>The Moment</span>
       </div>
-      <div class="gyeongju" v-else-if="route.params.id === '3'">
+      <div class="conatus main-img" v-else-if="route.params.id === '3'">
         <span class="en">Gyeongju</span>
-        <span>慶州</span>
       </div>
-      <div class="docu" v-else-if="route.params.id === '4'">
+      <div class="docu main-img" v-else-if="route.params.id === '4'">
         <span>Docu</span>
         <span class="and">&</span>
         <span>Snap</span>
@@ -77,7 +76,6 @@ watch(route, () => {
     justify-content: center;
     .main-image {
       width: 80%;
-      height: 85vh;
       display: flex;
       justify-content: center;
       .img {
@@ -87,7 +85,6 @@ watch(route, () => {
     }
     .docu {
       width: 80%;
-      height: 85vh;
       position: absolute;
       display: flex;
       flex-direction: column;
@@ -108,7 +105,6 @@ watch(route, () => {
     }
     .conatus {
       width: 80%;
-      height: 90vh;
       position: absolute;
       display: flex;
       justify-content: center;
@@ -122,7 +118,6 @@ watch(route, () => {
     }
     .moment {
       width: 80%;
-      height: 90vh;
       position: absolute;
       display: flex;
       justify-content: center;
@@ -133,26 +128,6 @@ watch(route, () => {
         font-weight: 800;
         color: white;
         text-shadow: 1px 1px 1px rgba($color: #000000, $alpha: 0.8);
-      }
-    }
-    .gyeongju {
-      width: 80%;
-      height: 90vh;
-      position: absolute;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      span {
-        writing-mode: vertical-rl;
-        font-size: 100px;
-        font-weight: 800;
-        color: white;
-        text-shadow: 1px 1px 1px rgba($color: #000000, $alpha: 0.8);
-      }
-      .en {
-        font-size: 60px;
-        letter-spacing: 4px;
-        margin-left: 25px;
       }
     }
   }
@@ -186,6 +161,9 @@ watch(route, () => {
       }
     }
   }
+  .main-img {
+    top: 50%;
+  }
 }
 @media screen and (max-width: 767px) {
   .main-wrapper {
@@ -200,7 +178,6 @@ watch(route, () => {
       justify-content: center;
       .main-image {
         width: 90%;
-        height: 90vh;
         display: flex;
         justify-content: center;
         .img {
@@ -210,7 +187,6 @@ watch(route, () => {
       }
       .docu {
         width: 90%;
-        height: 90vh;
         position: absolute;
         display: flex;
         flex-direction: column;
@@ -231,7 +207,6 @@ watch(route, () => {
       }
       .conatus {
         width: 90%;
-        height: 85vh;
         position: absolute;
         display: flex;
         justify-content: center;
@@ -245,40 +220,16 @@ watch(route, () => {
       }
       .moment {
         width: 90%;
-        height: 85vh;
         position: absolute;
         display: flex;
         justify-content: center;
         align-items: center;
         span {
           text-align: center;
-          font-size: 40px;
+          font-size: 50px;
           font-weight: 800;
           color: white;
           text-shadow: 1px 1px 1px rgba($color: #000000, $alpha: 0.8);
-        }
-      }
-      .gyeongju {
-        box-sizing: border-box;
-        width: 90%;
-        height: 85vh;
-        position: absolute;
-        display: flex;
-        flex-direction: column-reverse;
-        justify-content: space-between;
-        align-items: center;
-        padding-top: 10px;
-        span {
-          writing-mode: horizontal-tb;
-          font-size: 60px;
-          font-weight: 800;
-          color: white;
-          text-shadow: 1px 1px 1px rgba($color: #000000, $alpha: 0.8);
-        }
-        .en {
-          font-size: 35px;
-          margin-bottom: 8px;
-          letter-spacing: 2px;
         }
       }
     }
@@ -318,5 +269,11 @@ watch(route, () => {
 <style lang="scss" scope>
 img {
   object-fit: cover;
+}
+.main-image {
+  img {
+    object-fit: contain;
+    height: 100%;
+  }
 }
 </style>
