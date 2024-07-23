@@ -128,6 +128,7 @@ setInterval(() => {
     flex-direction: column;
     margin: 10px 0px;
     margin-top: 80px;
+    background: #0c1117;
     .page-left {
       margin: 20px 0px;
     }
