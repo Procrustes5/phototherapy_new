@@ -161,9 +161,6 @@ watch(route, () => {
       }
     }
   }
-  .main-img {
-    top: 50%;
-  }
 }
 @media screen and (max-width: 767px) {
   .main-wrapper {
