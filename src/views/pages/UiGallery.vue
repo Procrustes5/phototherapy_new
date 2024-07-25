@@ -13,11 +13,12 @@ const getGalleryPhotos = async (): Promise<void> => {
   photos.value = data
 }
 const homeStore = useHomeStore()
-const { clickedPhoto, clickedImage, isOpened } = storeToRefs(homeStore)
-const handleDrawer = (photo) => {
+const { clickedPhoto, clickedImage, isOpened, photoIndex } = storeToRefs(homeStore)
+const handleDrawer = (photo, index) => {
   clickedImage.value = photo.content
   clickedPhoto.value = photo
   isOpened.value = true
+  photoIndex.value = index
 }
 window.scrollTo({ top: 0, behavior: 'smooth' })
 onMounted(() => {
@@ -25,6 +26,10 @@ onMounted(() => {
 })
 watch(route, () => {
   getGalleryPhotos()
+})
+watch(photoIndex, (index) => {
+  clickedImage.value = photos.value[index].content
+  clickedPhoto.value = photos.value[index]
 })
 </script>
 <template>
@@ -54,7 +59,7 @@ watch(route, () => {
       </div>
       <div class="content">
         <div v-for="(photo, index) in photos" :key="index" class="content-img">
-          <el-image :src="photo.content" class="img" @click="handleDrawer(photo)"></el-image>
+          <el-image :src="photo.content" class="img" @click="handleDrawer(photo, index)"></el-image>
         </div>
       </div>
     </div>

@@ -3,9 +3,12 @@ import { useHomeStore } from '@store/homeStore.ts'
 import { storeToRefs } from 'pinia'
 
 const homeStore = useHomeStore()
-const { clickedImage, clickedPhoto, isOpened } = storeToRefs(homeStore)
+const { clickedImage, clickedPhoto, isOpened, photoIndex } = storeToRefs(homeStore)
 const closeDrawer = () => {
   isOpened.value = false
+}
+const handleBtnClicked = () => {
+  photoIndex.value ++
 }
 </script>
 <template>
@@ -15,12 +18,12 @@ const closeDrawer = () => {
     direction="ltr"
     :with-header="false"
     size="100%"
-    @click="closeDrawer"
     style="background: #0c1117"
   >
     <div class="drawer-wrapper" :class="{ vertImg: clickedImage.includes('9302') }">
       <div class="img-wrapper">
-        <el-image :src="clickedImage" fit="contain" class="drawer-img"> </el-image>
+        <div @click="handleBtnClicked">next</div>
+        <el-image :src="clickedImage" fit="contain" class="drawer-img" @click="closeDrawer"> </el-image>
       </div>
       <div class="story-wrapper">
         <h3>{{ clickedPhoto?.title ?? '' }}</h3>
