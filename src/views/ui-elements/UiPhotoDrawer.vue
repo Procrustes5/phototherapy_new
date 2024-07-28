@@ -7,8 +7,8 @@ const { clickedImage, clickedPhoto, isOpened, photoIndex } = storeToRefs(homeSto
 const closeDrawer = () => {
   isOpened.value = false
 }
-const handleBtnClicked = () => {
-  photoIndex.value ++
+const handleBtnClicked = (dir) => {
+  photoIndex.value += dir
 }
 </script>
 <template>
@@ -22,8 +22,11 @@ const handleBtnClicked = () => {
   >
     <div class="drawer-wrapper" :class="{ vertImg: clickedImage.includes('9302') }">
       <div class="img-wrapper">
-        <div @click="handleBtnClicked">next</div>
         <el-image :src="clickedImage" fit="contain" class="drawer-img" @click="closeDrawer"> </el-image>
+      </div>
+      <div class="page-btn">
+        <el-icon :size="60" @click="handleBtnClicked(-1)"><CaretLeft /></el-icon>
+        <el-icon :size="60" @click="handleBtnClicked(1)"><CaretRight /></el-icon>
       </div>
       <div class="story-wrapper">
         <h3>{{ clickedPhoto?.title ?? '' }}</h3>
