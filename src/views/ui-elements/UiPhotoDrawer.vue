@@ -22,7 +22,8 @@ const handleBtnClicked = (dir) => {
   >
     <div class="drawer-wrapper" :class="{ vertImg: clickedImage.includes('9302') }">
       <div class="img-wrapper">
-        <el-image :src="clickedImage" fit="contain" class="drawer-img" @click="closeDrawer"> </el-image>
+        <el-image :src="clickedImage" fit="contain" class="drawer-img" @click="closeDrawer">
+        </el-image>
       </div>
       <div class="page-btn">
         <el-icon :size="60" @click="handleBtnClicked(-1)"><CaretLeft /></el-icon>

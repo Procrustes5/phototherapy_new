@@ -74,10 +74,10 @@ watch(photos, preloadFirstImage, { immediate: true })
         :class="{ active: index === currentIndex }"
       >
         <div class="sized-box" v-if="!photos.length"></div>
-        <el-image 
-          :src="image.content" 
-          :lazy="index !== 0" 
-          class="img" 
+        <el-image
+          :src="image.content"
+          :lazy="index !== 0"
+          class="img"
           v-else
           :loading="index === 0 ? 'eager' : 'lazy'"
         >
