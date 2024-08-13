@@ -39,18 +39,18 @@ watch(photoIndex, (index) => {
         <el-image :src="photos[0]?.content" alt="loading" class="img"></el-image>
       </div>
       <div class="conatus main-img" v-if="route.params.id === '1'">
-        <span class="title-text" :class="{ title: !!photos }">Conatus</span>
+        <span class="title-text">Conatus</span>
       </div>
       <div class="moment main-img" v-else-if="route.params.id === '2'">
-        <span class="title-text" :class="{ title: !!photos }">The Moment</span>
+        <span class="title-text">The Moment</span>
       </div>
       <div class="conatus main-img" v-else-if="route.params.id === '3'">
-        <span class="en title-text" :class="{ title: !!photos }">Gyeongju</span>
+        <span class="en title-text">Gyeongju</span>
       </div>
       <div class="docu main-img" v-else-if="route.params.id === '4'">
-        <span class="title-text" :class="{ title: !!photos }">Docu</span>
-        <span class="and title-text" :class="{ title: !!photos }">&</span>
-        <span class="title-text" :class="{ title: !!photos }">Snap</span>
+        <span class="title-text">Docu</span>
+        <span class="and title-text">&</span>
+        <span class="title-text">Snap</span>
       </div>
     </div>
     <div class="content-wrapper">
