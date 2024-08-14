@@ -7,6 +7,7 @@ import { supabase } from '@/utils/supabase'
 
 const route = useRoute()
 const photos = ref([])
+const coverLoaded = ref<boolean>(false)
 
 const getGalleryPhotos = async (): Promise<void> => {
   let { data } = await supabase.from('photo').select('*').eq('category_id', route?.params?.id)
@@ -36,21 +37,21 @@ watch(photoIndex, (index) => {
   <div class="main-wrapper">
     <div class="main-image-wrapper">
       <div class="main-image">
-        <el-image :src="photos[0]?.content" alt="loading" class="img"></el-image>
+        <el-image :src="photos[0]?.content" alt="loading" class="img" @load="coverLoaded = true"></el-image>
       </div>
       <div class="conatus main-img" v-if="route.params.id === '1'">
-        <span class="title-text">Conatus</span>
+        <span class="title-text" :class="{title: !coverLoaded}">Conatus</span>
       </div>
       <div class="moment main-img" v-else-if="route.params.id === '2'">
-        <span class="title-text">The Moment</span>
+        <span class="title-text" :class="{title: !coverLoaded}">The Moment</span>
       </div>
       <div class="conatus main-img" v-else-if="route.params.id === '3'">
-        <span class="en title-text">Gyeongju</span>
+        <span class="en title-text" :class="{title: !coverLoaded}">Gyeongju</span>
       </div>
       <div class="docu main-img" v-else-if="route.params.id === '4'">
-        <span class="title-text">Docu</span>
-        <span class="and title-text">&</span>
-        <span class="title-text">Snap</span>
+        <span class="title-text" :class="{title: !coverLoaded}">Docu</span>
+        <span class="and title-text" :class="{title: !coverLoaded}">&</span>
+        <span class="title-text" :class="{title: !coverLoaded}">Snap</span>
       </div>
     </div>
     <div class="content-wrapper">
@@ -59,7 +60,11 @@ watch(photoIndex, (index) => {
       </div>
       <div class="content">
         <div v-for="(photo, index) in photos" :key="index" class="content-img">
-          <el-image :src="photo.content" class="img" @click="handleDrawer(photo, index)"></el-image>
+          <el-image
+            :src="photo.content"
+            class="img"
+            @click="handleDrawer(photo, index)"
+          ></el-image>
         </div>
       </div>
     </div>
