@@ -12,6 +12,7 @@ const currentIndex = ref(0)
 const isSlideShown = ref(true)
 const headerRef = ref()
 const isLoading = ref(true)
+const imageLoaded = ref<boolean>(false)
 
 const getSlidePhotos = async (): Promise<void> => {
   isLoading.value = true
@@ -80,6 +81,7 @@ watch(photos, preloadFirstImage, { immediate: true })
           class="img"
           v-else
           :loading="index === 0 ? 'eager' : 'lazy'"
+          @load="imageLoaded = true"
         >
           <template #placeholder>
             <div class="image-placeholder">
@@ -88,7 +90,7 @@ watch(photos, preloadFirstImage, { immediate: true })
           </template>
         </el-image>
       </div>
-      <div class="fixed-content" :class="{ active: currentIndex === 0 }">
+      <div class="fixed-content" :class="{ active: currentIndex === 0 || !imageLoaded}">
         <div class="title">Phototherapy</div>
         <div class="sub-title">Light Up Your Life: Embrace the Power of Phototherapy</div>
       </div>
