@@ -3,22 +3,26 @@ import UiHomePage from './UiHomePage.vue'
 import AppHeader from '@app/AppHeader.vue'
 import AppFooter from '@app/AppFooter.vue'
 import { supabase } from '@/utils/supabase'
-import { ElImage, ElLoading } from 'element-plus'
-
-const categories = defineModel('categories')
 
 const photos = ref([])
 const currentIndex = ref(0)
 const isSlideShown = ref(true)
 const headerRef = ref()
 const isLoading = ref(true)
-const imageLoaded = ref<boolean>(false)
+const imageLoaded = ref(false)
 
 const getSlidePhotos = async (): Promise<void> => {
   isLoading.value = true
-  let { data } = await supabase.from('photo').select('*').eq('category_id', 5)
-  photos.value = data
-  isLoading.value = false
+  try {
+    let { data, error } = await supabase.from('photo').select('*').eq('category_id', 5)
+    if (error) throw error
+    photos.value = data || []
+  } catch (error) {
+    console.error('Error fetching photos:', error)
+    photos.value = []
+  } finally {
+    isLoading.value = false
+  }
 }
 
 onMounted(() => {
@@ -26,71 +30,70 @@ onMounted(() => {
   const headerObserver = new IntersectionObserver(
     (entries) => {
       const firstEntry = entries[0]
-      if (firstEntry.isIntersecting) {
-        isSlideShown.value = true
-      } else {
-        isSlideShown.value = false
-      }
+      isSlideShown.value = firstEntry.isIntersecting
     },
-    {
-      root: null,
-      threshold: 0
-    }
+    { root: null, threshold: 0 }
   )
-  headerObserver.observe(headerRef.value!)
+  if (headerRef.value) {
+    headerObserver.observe(headerRef.value)
+  }
 })
 
-setInterval(() => {
-  if (!isLoading.value) {
+const changeSlide = () => {
+  if (!isLoading.value && photos.value.length > 0) {
     currentIndex.value = (currentIndex.value + 1) % photos.value.length
   }
-}, 3000)
-
-const loadImage = (src: string): Promise<void> => {
-  return new Promise((resolve, reject) => {
-    const img = new Image()
-    img.onload = () => resolve()
-    img.onerror = reject
-    img.src = src
-  })
 }
 
-const preloadFirstImage = async () => {
-  if (photos.value.length > 0) {
-    await loadImage(photos.value[0].content)
+let slideInterval: number | null = null
+
+watch(isLoading, (newValue) => {
+  if (!newValue && photos.value.length > 0) {
+    if (slideInterval) clearInterval(slideInterval)
+    slideInterval = setInterval(changeSlide, 3000)
   }
-}
+})
 
-watch(photos, preloadFirstImage, { immediate: true })
+onUnmounted(() => {
+  if (slideInterval) clearInterval(slideInterval)
+})
+
+const handleImageLoad = () => {
+  imageLoaded.value = true
+}
 </script>
 
 <template>
   <div class="wrapper">
     <div class="header" ref="headerRef">
       <el-loading :fullscreen="true" v-if="isLoading" />
-      <div
-        class="main-image"
-        v-for="(image, index) in photos"
-        :key="index"
-        :class="{ active: index === currentIndex }"
-      >
-        <div class="sized-box" v-if="!photos.length"></div>
-        <el-image
-          :src="image.content"
-          :lazy="index !== 0"
-          class="img"
-          v-else
-          :loading="index === 0 ? 'eager' : 'lazy'"
-          @load="imageLoaded = true"
+      <template v-else>
+        <div
+          v-for="(image, index) in photos"
+          :key="index"
+          class="main-image"
+          :class="{ active: index === currentIndex }"
         >
-          <template #placeholder>
-            <div class="image-placeholder">
-              <el-loading />
-            </div>
-          </template>
-        </el-image>
-      </div>
-      <div class="fixed-content" :class="{ active: currentIndex === 0 || !imageLoaded}">
+          <el-image
+            :src="image.content"
+            fit="cover"
+            :alt="image.description || 'Phototherapy image'"
+            @load="handleImageLoad"
+          >
+            <template #placeholder>
+              <div class="image-placeholder">
+                <el-loading />
+              </div>
+            </template>
+            <template #error>
+              <div class="image-error">
+                Failed to load image
+              </div>
+            </template>
+          </el-image>
+        </div>
+      </template>
+      <div class="fixed-content" :class="{ active: imageLoaded && !isLoading }">
         <div class="title">Phototherapy</div>
         <div class="sub-title">Light Up Your Life: Embrace the Power of Phototherapy</div>
       </div>
@@ -103,6 +106,7 @@ watch(photos, preloadFirstImage, { immediate: true })
     </div>
   </div>
 </template>
+
 <style lang="scss" scoped>
 @import '@style/global.scss';
 .wrapper {
@@ -130,22 +134,18 @@ watch(photos, preloadFirstImage, { immediate: true })
   height: 92px;
 }
 .main-image {
-  min-width: 100%;
+  width: 100%;
   height: 100%;
   position: absolute;
   transition: opacity 1s ease;
   opacity: 0;
   box-sizing: border-box;
   border: 30px solid whitesmoke;
-  .img {
+
+  .el-image {
     width: 100%;
-    height: 90%;
-    box-sizing: border-box;
+    height: 100%;
   }
-}
-.sized-box {
-  height: 100%;
-  width: 100%;
 }
 .main-image.active {
   opacity: 1;
@@ -159,17 +159,16 @@ watch(photos, preloadFirstImage, { immediate: true })
   justify-content: center;
   align-items: center;
   opacity: 0;
+  transition: opacity 0.5s ease;
+
   .title {
     margin: 70px 0px;
     font-size: 90px;
     font-weight: 600;
     color: whitesmoke;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
     opacity: 0;
-    transform: translateY(20px); /* 아래에서 시작 */
+    transform: translateY(20px);
     animation: fadeInUp 1s ease-out forwards;
   }
   .sub-title {
@@ -179,21 +178,14 @@ watch(photos, preloadFirstImage, { immediate: true })
     opacity: 0.8;
     font-style: italic;
   }
-  .prepare {
-    color: whitesmoke;
-    margin-top: 30px;
-    border: 1px solid whitesmoke;
-    font-weight: 600;
-    padding: 4px 6px;
-  }
 }
 .fixed-content.active {
   opacity: 1;
 }
 @keyframes fadeInUp {
   to {
-    opacity: 1; /* 완전히 불투명하게 */
-    transform: translateY(0); /* 원래 위치로 */
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 .content {
@@ -204,13 +196,14 @@ watch(photos, preloadFirstImage, { immediate: true })
   position: relative;
 }
 
-.image-placeholder {
+.image-placeholder, .image-error {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
   height: 100%;
   background-color: #f0f0f0;
+  color: #666;
 }
 @media screen and (min-width: 1023px) {
   .header {
