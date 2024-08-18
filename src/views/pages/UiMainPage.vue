@@ -86,9 +86,7 @@ const handleImageLoad = () => {
               </div>
             </template>
             <template #error>
-              <div class="image-error">
-                Failed to load image
-              </div>
+              <div class="image-error">Failed to load image</div>
             </template>
           </el-image>
         </div>
@@ -196,7 +194,8 @@ const handleImageLoad = () => {
   position: relative;
 }
 
-.image-placeholder, .image-error {
+.image-placeholder,
+.image-error {
   display: flex;
   justify-content: center;
   align-items: center;
