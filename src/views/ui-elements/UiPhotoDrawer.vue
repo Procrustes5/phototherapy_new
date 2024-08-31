@@ -1,7 +1,9 @@
 <script lang="ts" setup>
 import { useHomeStore } from '@store/homeStore.ts'
 import { storeToRefs } from 'pinia'
+import { useRoute } from 'vue-router'
 
+const route = useRoute()
 const homeStore = useHomeStore()
 const { clickedImage, clickedPhoto, isOpened, photoIndex } = storeToRefs(homeStore)
 const closeDrawer = () => {
@@ -25,7 +27,7 @@ const handleBtnClicked = (dir) => {
         <el-image :src="clickedImage" fit="contain" class="drawer-img" @click="closeDrawer">
         </el-image>
       </div>
-      <div class="page-btn">
+      <div class="page-btn" v-if="route.path !== '/'">
         <el-icon :size="60" @click="handleBtnClicked(-1)"><CaretLeft /></el-icon>
         <el-icon :size="60" @click="handleBtnClicked(1)"><CaretRight /></el-icon>
       </div>
