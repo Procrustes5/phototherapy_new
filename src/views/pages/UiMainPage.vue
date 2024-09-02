@@ -6,10 +6,10 @@ import { supabase } from '@/utils/supabase'
 
 const photos = ref([])
 const currentIndex = ref(0)
-const isSlideShown = ref(true)
+const isSlideShown = ref<boolean>(true)
 const headerRef = ref()
-const isLoading = ref(true)
-const imageLoaded = ref(false)
+const isLoading = ref<boolean>(true)
+const imageLoaded = ref<boolean>(false)
 
 const getSlidePhotos = async (): Promise<void> => {
   isLoading.value = true
