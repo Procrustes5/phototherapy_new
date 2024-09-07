@@ -45,7 +45,7 @@ const changeSlide = () => {
   }
 }
 
-let slideInterval: number | null = null
+let slideInterval: Nullable<number> = null
 
 watch(isLoading, (newValue) => {
   if (!newValue && photos.value.length > 0) {
@@ -139,7 +139,6 @@ const handleImageLoad = () => {
   opacity: 0;
   box-sizing: border-box;
   border: 30px solid whitesmoke;
-
   .el-image {
     width: 100%;
     height: 100%;
