@@ -4,13 +4,17 @@ import { storeToRefs } from 'pinia'
 import Drawer from '@view/ui-elements/UiPhotoDrawer.vue'
 import { useRoute } from 'vue-router'
 import { supabase } from '@/utils/supabase'
+import { watch } from 'vue'
 
 const route = useRoute()
 const photos = ref([])
 const coverLoaded = ref<boolean>(false)
 
 const getGalleryPhotos = async (): Promise<void> => {
-  let { data } = await supabase.from('photo').select('*').eq('category_id', route?.params?.id)
+  let { data } = await supabase
+    .from('photo')
+    .select('*')
+    .eq('category_id', route?.params?.id)
   photos.value = data
 }
 const homeStore = useHomeStore()
