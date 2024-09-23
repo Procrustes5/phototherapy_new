@@ -4,7 +4,6 @@ import { storeToRefs } from 'pinia'
 import Drawer from '@view/ui-elements/UiPhotoDrawer.vue'
 import { useRoute } from 'vue-router'
 import { supabase } from '@/utils/supabase'
-import { watch } from 'vue'
 
 const route = useRoute()
 const photos = ref([])
