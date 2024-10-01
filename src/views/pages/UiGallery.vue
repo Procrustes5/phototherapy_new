@@ -168,7 +168,7 @@ watch(photoIndex, (index) => {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       gap: 5px;
-      padding: 0px 30px;
+      padding: 0 30px;
       .content-img {
         height: 35vh;
         .img {
@@ -254,7 +254,7 @@ watch(photoIndex, (index) => {
       flex-direction: column;
       align-items: center;
       .content-header {
-        margin: 15px 0px;
+        margin: 15px 0;
         width: 90%;
         span {
           color: whitesmoke;
