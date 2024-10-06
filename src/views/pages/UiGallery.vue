@@ -267,7 +267,7 @@ watch(photoIndex, (index) => {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         gap: 5px;
-        padding: 0px 30px;
+        padding: 0 30px;
         .content-img {
           height: 160px;
           .img {
@@ -280,7 +280,7 @@ watch(photoIndex, (index) => {
   }
 }
 </style>
-<style lang="scss" scope>
+<style lang="scss">
 img {
   object-fit: cover;
 }
