@@ -42,4 +42,3 @@ const handleBtnClicked = (dir) => {
 <style lang="scss" scoped>
 @import '@style/photo-drawer.scss';
 </style>
-<style lang="scss"></style>
