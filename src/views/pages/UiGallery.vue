@@ -67,7 +67,7 @@ watch(photoIndex, (index) => {
         <span>PHOTOS</span>
       </div>
       <div class="content">
-        <div v-for="(photo, index) in photos" :key="index" class="content-img">
+        <div v-for="(photo, index) in photos" :key="photo.content" class="content-img">
           <el-image :src="photo.content" class="img" @click="handleDrawer(photo, index)"></el-image>
         </div>
       </div>
