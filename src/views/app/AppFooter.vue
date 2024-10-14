@@ -6,7 +6,7 @@ const currentYear = new Date().getFullYear()
     <div class="footer-left">
       <span class="contact-title">Contact</span>
       <span class="contact-email">phototherapy.contact@gmail.com</span>
-      <span>YouTube : Poetic Moments</span>
+      <span></span>
     </div>
     <div class="footer-right">
       <div class="photographer">
