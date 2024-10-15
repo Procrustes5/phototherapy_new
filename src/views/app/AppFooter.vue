@@ -5,7 +5,7 @@ const currentYear = new Date().getFullYear()
   <footer class="footer">
     <div class="footer-left">
       <span class="contact-title">Contact</span>
-      <span class="contact-email">phototherapy.contact@gmail.com</span>
+      <span class="contact-email">hanse2k@naver.com</span>
       <span></span>
     </div>
     <div class="footer-right">
