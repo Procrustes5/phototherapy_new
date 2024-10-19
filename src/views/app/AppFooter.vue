@@ -11,7 +11,7 @@ const currentYear = new Date().getFullYear()
     <div class="footer-right">
       <div class="photographer">
         <span class="photographer-upper">Photographed by</span>
-        <span class="name">Kim Han</span>
+        <span class="name">Han Kim</span>
         <div class="copyright">
           <span>{{ `© ${currentYear} Phototherapy. All rights reserved.` }}</span>
         </div>
