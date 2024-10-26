@@ -25,20 +25,6 @@ const getSlidePhotos = async (): Promise<void> => {
   }
 }
 
-onMounted(() => {
-  getSlidePhotos()
-  const headerObserver = new IntersectionObserver(
-    (entries) => {
-      const firstEntry = entries[0]
-      isSlideShown.value = firstEntry.isIntersecting
-    },
-    { root: null, threshold: 0 }
-  )
-  if (headerRef.value) {
-    headerObserver.observe(headerRef.value)
-  }
-})
-
 const changeSlide = () => {
   if (!isLoading.value && photos.value.length > 0) {
     currentIndex.value = (currentIndex.value + 1) % photos.value.length
@@ -51,6 +37,20 @@ watch(isLoading, (newValue) => {
   if (!newValue && photos.value.length > 0) {
     if (slideInterval) clearInterval(slideInterval)
     slideInterval = setInterval(changeSlide, 3000)
+  }
+})
+
+onMounted(() => {
+  getSlidePhotos()
+  const headerObserver = new IntersectionObserver(
+    (entries) => {
+      const firstEntry = entries[0]
+      isSlideShown.value = firstEntry.isIntersecting
+    },
+    { root: null, threshold: 0 }
+  )
+  if (headerRef.value) {
+    headerObserver.observe(headerRef.value)
   }
 })
 
