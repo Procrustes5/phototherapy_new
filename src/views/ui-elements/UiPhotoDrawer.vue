@@ -35,7 +35,19 @@ const imageLoadError = (error: Error) => {
   >
     <div class="drawer-wrapper" :class="{ vertImg: clickedImage.includes('9302') }">
       <div class="img-wrapper">
-        <el-image :src="clickedImage" fit="contain" class="drawer-img" @click="closeDrawer">
+        <el-image 
+          :src="clickedImage" 
+          fit="contain" 
+          class="drawer-img" 
+          @click="closeDrawer"
+          @error="imageLoadError"
+          loading="lazy"
+        >
+          <template #error>
+            <div class="image-error">
+              Failed to load image
+            </div>
+          </template>
         </el-image>
       </div>
       <div class="page-btn" v-if="route.path !== '/'">

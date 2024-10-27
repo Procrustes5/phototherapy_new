@@ -30,11 +30,18 @@ const getGalleryPhotos = async (): Promise<void> => {
 }
 const homeStore = useHomeStore()
 const { clickedPhoto, clickedImage, isOpened, photoIndex } = storeToRefs(homeStore)
-const handleDrawer = (photo, index) => {
+const handleDrawer = (photo: Photo, index: number) => {
+  if (!photo?.content) return
+  
   clickedImage.value = photo.content
   clickedPhoto.value = photo
   isOpened.value = true
   photoIndex.value = index
+}
+
+const handleImageError = (error: Error) => {
+  console.error('Failed to load image:', error)
+  // Could add user feedback here
 }
 window.scrollTo({ top: 0, behavior: 'smooth' })
 onMounted(() => {
