@@ -35,9 +35,6 @@ export const routes = [
   {
     path: '/gallery/:id(\\d+)',
     component: GalleryPage,
-    scrollBehavior() {
-      return { top: 0 }
-    },
     meta: {
       description: 'Immerse yourself in our specially curated photo galleries. Each image tells a story of tranquility and beauty.'
     }
@@ -74,8 +71,11 @@ export const routes = [
 export const router = createRouter({
   history: createWebHistory(),
   routes,
-  scrollBehavior() {
-    document.getElementById('app').scrollTop = 0
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    }
+    return { top: 0, behavior: 'smooth' }
   }
 })
 

@@ -8,13 +8,25 @@ import { supabase } from '@/utils/supabase'
 const route = useRoute()
 const photos = ref([])
 const coverLoaded = ref<boolean>(false)
+const loading = ref(false)
 
 const getGalleryPhotos = async (): Promise<void> => {
-  let { data } = await supabase
-    .from('photo')
-    .select('*')
-    .eq('category_id', route?.params?.id)
-  photos.value = data
+  if (loading.value) return
+  loading.value = true
+  try {
+    const { data, error } = await supabase
+      .from('photo')
+      .select('*')
+      .eq('category_id', route.params.id)
+      .order('created_at', { ascending: false })
+    
+    if (error) throw error
+    photos.value = data || []
+  } catch (error) {
+    console.error('Error fetching photos:', error)
+  } finally {
+    loading.value = false
+  }
 }
 const homeStore = useHomeStore()
 const { clickedPhoto, clickedImage, isOpened, photoIndex } = storeToRefs(homeStore)

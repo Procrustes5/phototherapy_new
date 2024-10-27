@@ -9,8 +9,19 @@ const { clickedImage, clickedPhoto, isOpened, photoIndex } = storeToRefs(homeSto
 const closeDrawer = () => {
   isOpened.value = false
 }
-const handleBtnClicked = (dir) => {
-  photoIndex.value += dir
+const handleBtnClicked = (dir: number) => {
+  const newIndex = photoIndex.value + dir
+  // Assuming you have access to total photos length
+  const totalPhotos = photos?.value?.length || 0
+  
+  if (newIndex >= 0 && newIndex < totalPhotos) {
+    photoIndex.value = newIndex
+  }
+}
+
+const imageLoadError = (error: Error) => {
+  console.error('Failed to load image:', error)
+  // Could add user feedback here
 }
 </script>
 <template>
