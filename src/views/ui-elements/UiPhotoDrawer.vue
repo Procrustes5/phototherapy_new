@@ -9,8 +9,19 @@ const { clickedImage, clickedPhoto, isOpened, photoIndex } = storeToRefs(homeSto
 const closeDrawer = () => {
   isOpened.value = false
 }
-const handleBtnClicked = (dir) => {
-  photoIndex.value += dir
+const handleBtnClicked = (dir: number) => {
+  const newIndex = photoIndex.value + dir
+  // Assuming you have access to total photos length
+  const totalPhotos = photos?.value?.length || 0
+  
+  if (newIndex >= 0 && newIndex < totalPhotos) {
+    photoIndex.value = newIndex
+  }
+}
+
+const imageLoadError = (error: Error) => {
+  console.error('Failed to load image:', error)
+  // Could add user feedback here
 }
 </script>
 <template>
@@ -24,7 +35,19 @@ const handleBtnClicked = (dir) => {
   >
     <div class="drawer-wrapper" :class="{ vertImg: clickedImage.includes('9302') }">
       <div class="img-wrapper">
-        <el-image :src="clickedImage" fit="contain" class="drawer-img" @click="closeDrawer">
+        <el-image 
+          :src="clickedImage" 
+          fit="contain" 
+          class="drawer-img" 
+          @click="closeDrawer"
+          @error="imageLoadError"
+          loading="lazy"
+        >
+          <template #error>
+            <div class="image-error">
+              Failed to load image
+            </div>
+          </template>
         </el-image>
       </div>
       <div class="page-btn" v-if="route.path !== '/'">
