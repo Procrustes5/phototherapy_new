@@ -4,6 +4,7 @@ import AppFooter from '@app/AppFooter.vue'
 import { useRoute } from 'vue-router'
 import { supabase } from '@/utils/supabase'
 import Menu from '@view/ui-elements/UiMenuDrawer.vue'
+import { watch } from 'vue'
 
 const categories = ref([])
 const route = useRoute()
@@ -17,8 +18,23 @@ const getCategories = async (): Promise<void> => {
   categories.value = data
 }
 
+const updateMetaTags = () => {
+  const title = route.meta.title as string || 'Phototherapy - Healing Through Photography'
+  const description = route.meta.description as string || 'A therapeutic photo gallery for mind healing.'
+  
+  document.title = title
+  document.querySelector('meta[name="description"]')?.setAttribute('content', description)
+  document.querySelector('meta[property="og:title"]')?.setAttribute('content', title)
+  document.querySelector('meta[property="og:description"]')?.setAttribute('content', description)
+  document.querySelector('meta[name="twitter:title"]')?.setAttribute('content', title)
+  document.querySelector('meta[name="twitter:description"]')?.setAttribute('content', description)
+}
+
+watch(() => route.path, updateMetaTags)
+
 onMounted(() => {
   getCategories()
+  updateMetaTags()
 })
 </script>
 <template>

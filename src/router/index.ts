@@ -15,14 +15,18 @@ export const routes = [
     name: 'home',
     component: MainPage,
     meta: {
-      description: 'Welcome to Phototherapy - where healing meets photography. Explore our curated collection of soul-soothing images.'
+      title: 'Phototherapy - Where Healing Meets Photography',
+      description: 'Welcome to Phototherapy - where healing meets photography. Explore our curated collection of soul-soothing images.',
+      keywords: 'phototherapy, healing photography, mental wellness, therapeutic images'
     }
   },
   {
     path: '/login',
     component: LoginPage,
     meta: {
-      description: 'This is Login Page of Phototherapy'
+      title: 'Login - Phototherapy',
+      description: 'Sign in to access your personalized therapeutic photography experience',
+      keywords: 'login, sign in, phototherapy account'
     }
   },
   {
