@@ -33,28 +33,36 @@ export const routes = [
     path: '/photo',
     component: HomePage,
     meta: {
-      description: 'Discover a diverse array of therapeutic photographs designed to calm your mind and uplift your spirit.'
+      title: 'Photo Collection - Phototherapy',
+      description: 'Discover a diverse array of therapeutic photographs designed to calm your mind and uplift your spirit.',
+      keywords: 'therapeutic photos, calming images, mindfulness photography, healing pictures'
     }
   },
   {
     path: '/gallery/:id(\\d+)',
     component: GalleryPage,
     meta: {
-      description: 'Immerse yourself in our specially curated photo galleries. Each image tells a story of tranquility and beauty.'
+      title: 'Therapeutic Gallery - Phototherapy',
+      description: 'Immerse yourself in our specially curated photo galleries. Each image tells a story of tranquility and beauty.',
+      keywords: 'photo gallery, therapeutic images, mental wellness gallery, healing photography collection'
     }
   },
   {
     path: '/direction',
     component: DirectionPage,
     meta: {
-      description: 'Find your way to inner peace through our guided photographic journey.'
+      title: 'Guided Journey - Phototherapy',
+      description: 'Find your way to inner peace through our guided photographic journey. Expert-curated paths to mental wellness.',
+      keywords: 'guided meditation, photographic journey, mental wellness guide, therapeutic path'
     }
   },
   {
     path: '/profile',
     component: ProfilePage,
     meta: {
-      description: 'Personalize your Phototherapy experience. Manage your profile and favorite healing images.'
+      title: 'Your Profile - Phototherapy',
+      description: 'Personalize your Phototherapy experience. Manage your profile, collections, and favorite healing images.',
+      keywords: 'user profile, personal gallery, therapeutic preferences, photo collections'
     }
   },
   {
@@ -62,7 +70,9 @@ export const routes = [
     component: UploadPage,
     meta: {
       requiresAuth: true,
-      description: 'Share your own therapeutic images and contribute to our community of healing through photography.'
+      title: 'Share Your Photos - Phototherapy',
+      description: 'Share your own therapeutic images and contribute to our community of healing through photography. Join our mission of visual wellness.',
+      keywords: 'upload photos, share images, contribute photography, therapeutic community'
     }
   },
   {
