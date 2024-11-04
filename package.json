@@ -19,7 +19,7 @@
     "browser-image-compression": "^2.0.2",
     "element-plus": "^2.7.2",
     "pinia": "^2.1.7",
-    "vue": "^3.4.21",
+    "vue": "^3.5.12",
     "vue-router": "^4.3.0",
     "vuedraggable": "^4.1.0"
   },
